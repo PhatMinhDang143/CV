@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặng Minh Phát - Portfolio</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-light: #eff6ff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-main: #f8fafc;
+            --bg-white: #ffffff;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 80px;
+            background: radial-gradient(100% 100% at 50% 0%, var(--accent-light) 0%, rgba(255,255,255,0) 100%);
+            text-align: center;
+        }
+
+        .hero-badge {
+            background-color: var(--accent-light);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 24px;
+            border: 1px solid rgba(37, 99, 243, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+
+        /* Info Grid Layout */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .info-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08);
+            border-color: rgba(37, 99, 243, 0.2);
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Timeline Layout */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background-color: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 2px solid var(--bg-main);
+            transform: translateX(-40%);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: translateX(-40%) scale(1.4);
+            box-shadow: 0 0 0 6px var(--accent-light);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .timeline-content {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Contact Details Layout */
+        .contact-box {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .contact-method h4 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .contact-method p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .contact-method a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-method a:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: #94a3b8;
+            padding: 32px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-box {
+                grid-template-columns: 1fr;
+                padding: 24px;
+                gap: 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">Đặng Minh Phát</div>
+                <ul class="nav-links">
+                    <li><a href="#thong-tin">Thông tin cá nhân</a></li>
+                    <li><a href="#qua-trinh">Quá trình</a></li>
+                    <li><a href="#lien-he">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">Cử nhân Sư phạm Toán học</span>
+            <h1>ĐẶNG MINH PHÁT</h1>
+            <p>Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p>
+        </div>
+    </section>
+
+    <!-- Personal Information Section -->
+    <section id="thong-tin">
+        <div class="container">
+            <h2 class="section-title">Thông tin cá nhân</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-label">Ngày tháng năm sinh</div>
+                    <div class="info-value">14/03/2002</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Nơi sinh</div>
+                    <div class="info-value">Đồng Tháp</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Trình độ văn hóa</div>
+                    <div class="info-value">12/12</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Trình độ chuyên môn</div>
+                    <div class="info-value">Cử nhân Sư phạm Toán học</div>
+                </div>
+                <div class="info-card" style="grid-column: span 2;">
+                    <div class="info-label">Nơi công tác</div>
+                    <div class="info-value">Trường THPT Cao Lãnh 2</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey / Timeline Section -->
+    <section id="qua-trinh" style="background-color: rgba(241, 245, 249, 0.5);">
+        <div class="container">
+            <h2 class="section-title">Quá trình học tập và công tác</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2020 - 2024</div>
+                    <div class="timeline-content">
+                        <h3>Sinh viên ngành Sư phạm Toán học</h3>
+                        <p style="color: var(--text-muted); margin-top: 4px;">Trường Đại học Cần Thơ</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2025 - Nay</div>
+                    <div class="timeline-content">
+                        <h3>Giáo viên Toán</h3>
+                        <p style="color: var(--text-muted); margin-top: 4px;">Trường THPT Cao Lãnh 2 – Đồng Tháp</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2026 - Nay</div>
+                    <div class="timeline-content">
+                        <h3>Học viên cao học chuyên ngành Toán ứng dụng</h3>
+                        <p style="color: var(--text-muted); margin-top: 4px;">Đại học Cần Thơ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="lien-he">
+        <div class="container">
+            <h2 class="section-title">Thông tin liên hệ</h2>
+            <div class="contact-box">
+                <div class="contact-method">
+                    <h4>Địa chỉ email</h4>
+                    <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
+                </div>
+                <div class="contact-method">
+                    <h4>Số điện thoại</h4>
+                    <p><a href="tel:0816738016">0816738016</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© Đặng Minh Phát. Thiết kế website chuyên nghiệp độc quyền dựa trên thông tin chính thức.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
