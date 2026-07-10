@@ -10,26 +10,35 @@
             --accent-light: #fcd549;
             --text-main: #f8fafc;
             --text-muted: #cbd5e1;
-            --bg-glass: rgba(27, 6, 61, 0.85); /* Tone màu tím than đồng bộ với background */
-            --border-glass: rgba(255, 255, 255, 0.1);
+            --border-glass: rgba(255, 255, 255, 0.15);
             --radius: 20px;
             --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            --scroll-progress: 0s; /* Biến toàn cục để nhận % scroll từ Javascript */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
         html { scroll-behavior: smooth; }
         body { background-color: #1b063d; color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
         /* ========================================= */
-        /* BỐ CỤC NỀN THEO SVG BẠN CUNG CẤP          */
+        /* PHÉP THUẬT ZERO-LAG: KẾT NỐI SVG VỚI SCROLL*/
         /* ========================================= */
         .svg-background {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; background-color: #ffefba; pointer-events: none;
+            z-index: -1; pointer-events: none; background-color: #ffefba;
         }
-        .svg-background svg { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Ghi đè toàn bộ animation của SVG: Đóng băng và điều khiển bằng cuộn chuột */
+        .svg-background svg * {
+            animation-play-state: paused !important;
+            animation-duration: 1s !important;
+            animation-iteration-count: 1 !important;
+            animation-fill-mode: both !important;
+            animation-delay: var(--scroll-progress) !important;
+            will-change: transform, opacity;
+        }
 
         .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-        header { background-color: rgba(27, 6, 61, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: 0.3s; }
+        header { background-color: rgba(20, 5, 45, 0.85); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: 0.3s; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; height: 72px; }
         .logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--accent-light); }
@@ -40,32 +49,35 @@
         .nav-links a:hover::after { width: 100%; }
 
         .hero { padding-top: 180px; padding-bottom: 100px; text-align: center; position: relative; }
-        .profile-pic-container { width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, var(--accent-light), var(--accent)); box-shadow: 0 20px 40px rgba(255, 98, 84, 0.3); }
+        .profile-pic-container { width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, var(--accent-light), var(--accent)); box-shadow: 0 20px 40px rgba(255, 98, 84, 0.4); }
         .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #1b063d; }
-        .hero-badge { background: var(--bg-glass); color: var(--accent-light); padding: 8px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; display: inline-block; margin-bottom: 24px; border: 1px solid var(--border-glass); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-badge { background: rgba(20, 5, 45, 0.85); color: var(--accent-light); padding: 8px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; display: inline-block; margin-bottom: 24px; border: 1px solid var(--border-glass); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        
+        /* Chữ có viền bóng đổ dày để nổi bật trên nền trời sáng */
+        .hero h1 { font-size: 3.5rem; font-weight: 900; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 25px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.25rem; font-weight: 600; color: #f8fafc; max-width: 650px; margin: 0 auto; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
 
         /* ========================================= */
         /* HIỆU ỨNG TRƯỢT ĐA HƯỚNG MƯỢT MÀ           */
         /* ========================================= */
-        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal-bottom { opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-bottom { opacity: 0; transform: translateY(50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .revealed { opacity: 1; transform: translate(0, 0); }
 
         section { padding: 80px 0; position: relative; }
         .section-header { text-align: center; margin-bottom: 60px; }
-        .section-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: inline-block; color: #fff; position: relative; padding-bottom: 15px; }
-        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 5px; background: linear-gradient(90deg, var(--accent-light), var(--accent)); border-radius: 5px; box-shadow: 0 0 15px rgba(255, 98, 84, 0.6); }
+        .section-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: inline-block; color: #fff; position: relative; padding-bottom: 15px; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 5px; background: linear-gradient(90deg, var(--accent-light), var(--accent)); border-radius: 5px; box-shadow: 0 0 15px rgba(255, 98, 84, 0.8); }
         
-        .bento-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 15px 35px rgba(0,0,0,0.3); padding: 30px; transition: transform 0.3s, border-color 0.3s; }
-        .bento-card:hover { border-color: rgba(255, 98, 84, 0.4); transform: translateY(-5px); }
+        /* KHỐI BENTO CARD ĐEN NHÁM (KHÔNG BLUR, KHÔNG LAG) */
+        .bento-card { background: linear-gradient(135deg, rgba(25, 10, 50, 0.9), rgba(15, 5, 30, 0.95)); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 15px 35px rgba(0,0,0,0.5); padding: 30px; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+        .bento-card:hover { border-color: rgba(255, 98, 84, 0.6); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 98, 84, 0.2); }
 
         /* LƯỚI THÔNG TIN CÁ NHÂN */
         .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .info-item { display: flex; flex-direction: column; gap: 8px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .info-item:hover { background: rgba(255,255,255,0.08); }
+        .info-item { display: flex; flex-direction: column; gap: 8px; padding: 20px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+        .info-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
         .info-icon { font-size: 1.5rem; color: var(--accent-light); margin-bottom: 4px; }
         .info-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
         .info-value { font-size: 1.15rem; color: #fff; font-weight: 700; }
@@ -76,14 +88,14 @@
         .skill-item { margin-bottom: 22px; }
         .skill-item:last-child { margin-bottom: 0; }
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; color: #fff; font-weight: 600; font-size: 0.95rem; }
-        .skill-bar-bg { width: 100%; height: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; position: relative; }
+        .skill-bar-bg { width: 100%; height: 10px; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; position: relative; }
         .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 10px; transform-origin: left; transform: scaleX(0); box-shadow: inset 0 0 10px rgba(255,255,255,0.2); }
         .revealed .skill-bar-fill { animation: fillBar 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.3s; }
         @keyframes fillBar { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
 
         /* TIMELINE */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; }
-        .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; }
         .timeline-item { position: relative; margin-bottom: 40px; }
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-dot { position: absolute; left: -42px; top: 8px; width: 20px; height: 20px; border-radius: 50%; background-color: var(--accent); border: 4px solid #1b063d; box-shadow: 0 0 10px var(--accent); z-index: 2; transition: 0.3s; }
@@ -96,20 +108,20 @@
         .hobbies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .hobby-card { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
         .hobby-icon { font-size: 3.5rem; margin-bottom: 16px; transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .hobby-card:hover .hobby-icon { transform: scale(1.2) translateY(-10px); }
+        .hobby-card:hover .hobby-icon { transform: scale(1.2) translateY(-10px); text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .hobby-card h3 { font-size: 1.3rem; color: #fff; font-weight: 700; }
 
         /* LIÊN HỆ BENTO BOX */
         .contact-bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .contact-item { display: flex; align-items: center; gap: 18px; padding: 24px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); text-decoration: none; transition: 0.3s; }
+        .contact-item { display: flex; align-items: center; gap: 18px; padding: 24px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.05); text-decoration: none; transition: 0.3s; }
         .contact-item.span-2 { grid-column: span 2; }
-        .contact-item:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); border-color: var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .contact-item:hover { transform: translateY(-5px); background: rgba(255,255,255,0.09); border-color: var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .contact-icon { width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #fff; font-family: sans-serif; }
         .contact-info { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
         .contact-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
         .contact-value { font-size: 1.1rem; font-weight: 700; color: #fff; word-break: break-word; }
 
-        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(27, 6, 61, 0.8); backdrop-filter: blur(10px); }
+        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(15, 5, 30, 0.95); }
 
         @media (max-width: 850px) {
             .hero h1 { font-size: 2.5rem; }
@@ -127,12 +139,12 @@
 </head>
 <body>
 
-    <!-- ĐÂY LÀ SVG BACKGROUND TUYỆT ĐẸP BẠN CUNG CẤP ĐÃ ĐƯỢC DỌN DẸP SẠCH TEXT -->
+    <!-- ĐÂY LÀ SVG BACKGROUND TUYỆT ĐẸP BẠN CUNG CẤP, ĐÃ ĐƯỢC DỌN SẠCH TEXT -->
     <div class="svg-background">
-        <svg id="esa06W5jl3A1" xmlns="http://www.w3.org/2000/svg" viewBox="0 100 700 400" preserveAspectRatio="xMidYMid slice">
-            <style>
-                #esa06W5jl3A3_to {animation: esa06W5jl3A3_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A3_to__to { 0% {transform: translate(1453.623649px,706.034976px)} 8% {transform: translate(1453.623649px,706.034976px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(1453.623649px,-303.334493px)} 100% {transform: translate(1453.623649px,-303.334493px)}} #esa06W5jl3A5_to {animation: esa06W5jl3A5_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_to__to { 0% {transform: translate(960px,658px)} 8% {transform: translate(960px,658px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1220.179993px)} 100% {transform: translate(960px,1220.179993px)}} #esa06W5jl3A5 {animation: esa06W5jl3A5_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0} 100% {opacity: 0}} #esa06W5jl3A6_to {animation: esa06W5jl3A6_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_to__to { 0% {transform: translate(959.999996px,730px)} 8% {transform: translate(959.999996px,730px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999996px,1197.159976px)} 100% {transform: translate(959.999996px,1197.159976px)}} #esa06W5jl3A6 {animation: esa06W5jl3A6_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0.5} 100% {opacity: 0.5}} #esa06W5jl3A7_to {animation: esa06W5jl3A7_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7_to__to { 0% {transform: translate(959.999999px,810px)} 8% {transform: translate(959.999999px,810px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999999px,1180.545549px)} 100% {transform: translate(959.999999px,1180.545549px)}} #esa06W5jl3A7-fill-0 {animation: esa06W5jl3A7-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-0__c { 0% {stop-color: #ff6254} 8% {stop-color: #ff6254;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffac54} 100% {stop-color: #ffac54}} #esa06W5jl3A7-fill-1 {animation: esa06W5jl3A7-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-1__c { 0% {stop-color: #ff9b47} 8% {stop-color: #ff9b47;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffc755} 100% {stop-color: #ffc755}} #esa06W5jl3A8_to {animation: esa06W5jl3A8_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A8_to__to { 0% {transform: translate(960.000005px,820px)} 8% {transform: translate(960.000005px,820px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960.000005px,1175.910001px)} 100% {transform: translate(960.000005px,1175.910001px)}} #esa06W5jl3A9-fill-0 {animation: esa06W5jl3A9-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-0__c { 0% {stop-color: #c6185b} 8% {stop-color: #c6185b;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #f30f5b} 100% {stop-color: #f30f5b}} #esa06W5jl3A9-fill-1 {animation: esa06W5jl3A9-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-1__c { 0% {stop-color: #e24556} 8% {stop-color: #e24556;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ff7d4f} 100% {stop-color: #ff7d4f}} #esa06W5jl3A11_to {animation: esa06W5jl3A11_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A11_to__to { 0% {transform: translate(960px,920px)} 8% {transform: translate(960px,920px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1120px)} 100% {transform: translate(960px,1120px)}} #esa06W5jl3A17_to {animation: esa06W5jl3A17_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A17_to__to { 0% {transform: translate(2420.493774px,810.950073px)} 8% {transform: translate(2420.493774px,810.950073px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(-494.283677px,810.950073px)} 100% {transform: translate(-494.283677px,810.950073px)}} #esa06W5jl3A36_to {animation: esa06W5jl3A36_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A36_to__to { 0% {transform: translate(960px,900px)} 8% {transform: translate(960px,900px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1000px)} 100% {transform: translate(960px,1000px)}}
-            </style>
+        <svg id="esa06W5jl3A1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 100 700 400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+            <style><![CDATA[
+            #esa06W5jl3A3_to {animation: esa06W5jl3A3_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A3_to__to { 0% {transform: translate(1453.623649px,706.034976px)} 8% {transform: translate(1453.623649px,706.034976px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(1453.623649px,-303.334493px)} 100% {transform: translate(1453.623649px,-303.334493px)}} #esa06W5jl3A5_to {animation: esa06W5jl3A5_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_to__to { 0% {transform: translate(960px,658px)} 8% {transform: translate(960px,658px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1220.179993px)} 100% {transform: translate(960px,1220.179993px)}} #esa06W5jl3A5 {animation: esa06W5jl3A5_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0} 100% {opacity: 0}} #esa06W5jl3A6_to {animation: esa06W5jl3A6_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_to__to { 0% {transform: translate(959.999996px,730px)} 8% {transform: translate(959.999996px,730px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999996px,1197.159976px)} 100% {transform: translate(959.999996px,1197.159976px)}} #esa06W5jl3A6 {animation: esa06W5jl3A6_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0.5} 100% {opacity: 0.5}} #esa06W5jl3A7_to {animation: esa06W5jl3A7_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7_to__to { 0% {transform: translate(959.999999px,810px)} 8% {transform: translate(959.999999px,810px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999999px,1180.545549px)} 100% {transform: translate(959.999999px,1180.545549px)}} #esa06W5jl3A7-fill-0 {animation: esa06W5jl3A7-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-0__c { 0% {stop-color: #ff6254} 8% {stop-color: #ff6254;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffac54} 100% {stop-color: #ffac54}} #esa06W5jl3A7-fill-1 {animation: esa06W5jl3A7-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-1__c { 0% {stop-color: #ff9b47} 8% {stop-color: #ff9b47;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffc755} 100% {stop-color: #ffc755}} #esa06W5jl3A8_to {animation: esa06W5jl3A8_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A8_to__to { 0% {transform: translate(960.000005px,820px)} 8% {transform: translate(960.000005px,820px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960.000005px,1175.910001px)} 100% {transform: translate(960.000005px,1175.910001px)}} #esa06W5jl3A9-fill-0 {animation: esa06W5jl3A9-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-0__c { 0% {stop-color: #c6185b} 8% {stop-color: #c6185b;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #f30f5b} 100% {stop-color: #f30f5b}} #esa06W5jl3A9-fill-1 {animation: esa06W5jl3A9-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-1__c { 0% {stop-color: #e24556} 8% {stop-color: #e24556;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ff7d4f} 100% {stop-color: #ff7d4f}} #esa06W5jl3A11_to {animation: esa06W5jl3A11_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A11_to__to { 0% {transform: translate(960px,920px)} 8% {transform: translate(960px,920px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1120px)} 100% {transform: translate(960px,1120px)}} #esa06W5jl3A17_to {animation: esa06W5jl3A17_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A17_to__to { 0% {transform: translate(2420.493774px,810.950073px)} 8% {transform: translate(2420.493774px,810.950073px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(-494.283677px,810.950073px)} 100% {transform: translate(-494.283677px,810.950073px)}} #esa06W5jl3A36_to {animation: esa06W5jl3A36_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A36_to__to { 0% {transform: translate(960px,900px)} 8% {transform: translate(960px,900px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1000px)} 100% {transform: translate(960px,1000px)}}
+            ]]></style>
             <defs>
                 <linearGradient id="esa06W5jl3A5-fill" x1="961.39" y1="1303.86" x2="961.39" y2="11.98" spreadMethod="pad" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0)"><stop id="esa06W5jl3A5-fill-0" offset="64%" stop-color="#fde17b"/><stop id="esa06W5jl3A5-fill-1" offset="100%" stop-color="#feeaa4"/></linearGradient>
                 <linearGradient id="esa06W5jl3A6-fill" x1="961.39" y1="1314.95" x2="961.39" y2="163.42" spreadMethod="pad" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0)"><stop id="esa06W5jl3A6-fill-0" offset="59%" stop-color="#fe9b4f"/><stop id="esa06W5jl3A6-fill-1" offset="100%" stop-color="#fcd549"/></linearGradient>
@@ -191,7 +203,6 @@
         </div>
     </section>
 
-    <!-- THÔNG TIN CÁ NHÂN (THIẾT KẾ MỚI GỌN GÀNG, CHUYÊN NGHIỆP HƠN) -->
     <section id="thong-tin">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Thông tin cá nhân</h2></div>
@@ -207,7 +218,6 @@
         </div>
     </section>
 
-    <!-- NĂNG LỰC CHUYÊN MÔN (THIẾT KẾ BENTO) -->
     <section id="nang-luc">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Năng lực & Chuyên môn</h2></div>
@@ -232,17 +242,17 @@
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Học tập & Công tác</h2></div>
             <div class="timeline">
-                <div class="timeline-item reveal-bottom">
+                <div class="timeline-item reveal-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">2020 - 2024</div>
                     <div class="bento-card timeline-content"><h3>Sinh viên ngành Sư phạm Toán học</h3><p>Trường Đại học Cần Thơ</p></div>
                 </div>
-                <div class="timeline-item reveal-bottom">
+                <div class="timeline-item reveal-right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">2025 - Nay</div>
                     <div class="bento-card timeline-content"><h3>Giáo viên Toán</h3><p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p></div>
                 </div>
-                <div class="timeline-item reveal-bottom">
+                <div class="timeline-item reveal-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">2026 - Nay</div>
                     <div class="bento-card timeline-content"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div>
@@ -278,26 +288,54 @@
     </section>
 
     <footer>
-        <div class="container"><p>© Đặng Minh Phát. Thiết kế tối ưu hiệu năng - Cinematic Vector Graphics.</p></div>
+        <div class="container"><p>© Đặng Minh Phát. Creative Animation Timeline & Parallax Scrolling.</p></div>
     </footer>
 
-    <!-- SCRIPT TỐI ƯU SIÊU NHẸ -->
+    <!-- SCRIPT ĐIỀU KHIỂN HOẠT ẢNH BẰNG THANH CUỘN -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Hiệu ứng trượt nội dung đa hướng
             const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-bottom');
-            
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
                         e.target.classList.add('revealed');
                     } else {
-                        // Tự động mờ đi khi cuộn ra khỏi màn hình để chuẩn bị trượt lại
+                        // Xóa class để khi lướt ngược lại nội dung sẽ trượt lại từ đầu
                         e.target.classList.remove('revealed'); 
                     }
                 });
             }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
-            
             revealElements.forEach(el => revealObserver.observe(el));
+
+            // PHÉP THUẬT: SVG Scrubbing Animation (Cuộn tới đâu, hình chạy tới đó)
+            let scrollTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(() => {
+                        const docHeight = document.documentElement.scrollHeight;
+                        const winHeight = window.innerHeight;
+                        const maxScroll = docHeight - winHeight;
+                        
+                        // Tính toán % người dùng đã cuộn
+                        let progress = 0;
+                        if (maxScroll > 0) {
+                            progress = window.scrollY / maxScroll;
+                        }
+                        
+                        // Giới hạn giá trị để tránh lỗi hiển thị khi cuộn quá tay trên điện thoại
+                        progress = Math.min(Math.max(progress, 0), 0.999);
+                        
+                        // Cập nhật biến CSS toàn cục
+                        document.documentElement.style.setProperty('--scroll-progress', `-${progress}s`);
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            });
+            
+            // Kích hoạt tính toán ngay lần đầu tải trang
+            window.dispatchEvent(new Event('scroll'));
         });
     </script>
 </body>
