@@ -10,25 +10,36 @@
             --accent-light: #fcd34d;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --bg-glass: rgba(15, 23, 42, 0.7);
+            --bg-glass: rgba(15, 23, 42, 0.6);
             --border-glass: rgba(255, 255, 255, 0.08);
             --radius: 16px;
             --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
         html { scroll-behavior: smooth; }
-        body { background-color: #020617; color: var(--text-main); line-height: 1.6; overflow-x: hidden; perspective: 1200px; }
+        body { background-color: #020617; color: var(--text-main); line-height: 1.6; overflow-x: hidden; perspective: 1200px; position: relative; }
 
-        /* AURORA BACKGROUND - TRÀN VIỀN, ĐỘNG VÀ SIÊU NHẸ */
-        .aurora-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; background: #020617; }
-        .aurora-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.6; animation: floatAurora 20s infinite alternate; will-change: transform; }
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #e11d48; }
-        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: #4c1d95; animation-delay: -5s; animation-direction: alternate-reverse; }
-        .blob-3 { top: 30%; left: 30%; width: 45vw; height: 45vw; background: #f97316; opacity: 0.4; animation-delay: -10s; }
-        @keyframes floatAurora { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10vw, 10vh) scale(1.1); } }
+        /* ========================================= */
+        /* BACKGROUND KÉO DÀI TẬN CÙNG - NHIỀU TẦNG  */
+        /* Tích hợp phong cách Điện ảnh & Film Grain */
+        /* ========================================= */
+        .document-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; overflow: hidden; background: #020617; }
+        
+        /* Lớp 1: Film Grain Overlay (Tạo chất nghệ thuật, chống vỡ hạt màu) */
+        .bg-texture { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"); z-index: 10; pointer-events: none; }
+        
+        /* Lớp 2: Các tầng ánh sáng nổi có chiều sâu phân bổ dọc theo trang */
+        .bg-shape { position: absolute; filter: blur(90px); border-radius: 50%; opacity: 0.5; }
+        .shape-1 { top: 0%; left: -10%; width: 60vw; height: 60vw; background: #e11d48; }
+        .shape-2 { top: 15%; right: -20%; width: 70vw; height: 70vw; background: #4c1d95; }
+        .shape-3 { top: 35%; left: 10%; width: 50vw; height: 50vw; background: #f97316; opacity: 0.25; }
+        .shape-4 { top: 55%; right: 5%; width: 60vw; height: 60vw; background: #0369a1; opacity: 0.4; }
+        .shape-5 { top: 75%; left: -15%; width: 70vw; height: 70vw; background: #be123c; opacity: 0.3; }
+        .shape-6 { bottom: -5%; right: -10%; width: 80vw; height: 60vw; background: #4338ca; opacity: 0.5; }
+        /* ========================================= */
 
         .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-        header { background-color: rgba(2, 6, 23, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+        header { background-color: rgba(2, 6, 23, 0.75); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; height: 72px; }
         .logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--accent); }
@@ -45,19 +56,23 @@
         .hero h1 { font-size: 3.5rem; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        .reveal-wrapper { opacity: 0; transform: translateY(50px) scale(0.95); transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: opacity, transform; }
-        .reveal-wrapper.revealed { opacity: 1; transform: translateY(0) scale(1); }
+        /* ========================================= */
+        /* HIỆU ỨNG TRƯỢT ĐA HƯỚNG MỚI               */
+        /* ========================================= */
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: opacity, transform; }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: opacity, transform; }
+        .reveal-bottom { opacity: 0; transform: translateY(50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: opacity, transform; }
+        
+        .revealed { opacity: 1; transform: translate(0, 0); }
         .tilt-wrapper { transform-style: preserve-3d; will-change: transform; }
+        /* ========================================= */
 
         section { padding: 80px 0; position: relative; }
-        
-        /* TIÊU ĐỀ NÂNG CẤP (CHUYÊN NGHIỆP HƠN) */
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: inline-block; background: linear-gradient(90deg, #fcd34d, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; padding-bottom: 15px; }
         .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: #f97316; border-radius: 4px; box-shadow: 0 0 15px rgba(249,115,22,0.8); }
         
-        /* BỎ BLUR - DÙNG SOLID GLASS ĐỂ CHỐNG GIẬT LAG */
-        .glass-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 15px 35px rgba(0,0,0,0.4); transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+        .glass-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
         .glass-card:hover { border-color: rgba(249, 115, 22, 0.4); box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15); }
 
         .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -73,7 +88,7 @@
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; color: #fff; font-weight: 600; font-size: 0.95rem; }
         .skill-bar-bg { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden; }
         .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 10px; transform-origin: left; transform: scaleX(0); }
-        .reveal-wrapper.revealed .skill-bar-fill { animation: fillBar 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.2s; }
+        .revealed .skill-bar-fill { animation: fillBar 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.3s; }
         @keyframes fillBar { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
         .skill-item:hover .skill-bar-fill { filter: brightness(1.2); box-shadow: 0 0 15px rgba(249, 115, 22, 0.6); }
 
@@ -86,12 +101,12 @@
 
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; }
         .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), transparent); border-radius: 3px; }
-        .timeline-item { position: relative; margin-bottom: 60px; }
+        .timeline-item { position: relative; margin-bottom: 60px; display: flex; flex-direction: column; align-items: flex-start; }
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-dot { position: absolute; left: -40px; top: 8px; width: 18px; height: 18px; border-radius: 50%; background-color: var(--accent); border: 4px solid #020617; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.3); z-index: 2; transition: 0.3s; }
         .timeline-item:hover .timeline-dot { transform: scale(1.4); background-color: #fff; border-color: var(--accent); box-shadow: 0 0 15px rgba(249, 115, 22, 0.8); }
         .timeline-date { font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 10px; display: inline-block; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .timeline-content { padding: 30px; }
+        .timeline-content { padding: 30px; width: 100%; }
         .timeline-content h3 { font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 6px; transform: translateZ(20px); }
         .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500; }
 
@@ -104,7 +119,7 @@
         .bento-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
         .bento-value { font-size: 1.1rem; font-weight: 700; color: #fff; word-break: break-word; }
 
-        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: #020617; }
+        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: transparent; }
 
         @media (max-width: 850px) {
             .hero h1 { font-size: 2.5rem; }
@@ -112,6 +127,7 @@
             .nav-links { display: none; }
             .contact-bento { grid-template-columns: repeat(2, 1fr); padding: 20px; }
             .bento-item.span-2 { grid-column: span 2; }
+            .shape-1, .shape-2, .shape-3 { width: 100vw; height: 100vw; }
         }
         @media (max-width: 600px) {
             .contact-bento { grid-template-columns: 1fr; }
@@ -121,10 +137,15 @@
 </head>
 <body>
 
-    <div class="aurora-bg">
-        <div class="aurora-blob blob-1"></div>
-        <div class="aurora-blob blob-2"></div>
-        <div class="aurora-blob blob-3"></div>
+    <!-- BACKGROUND KÉO DÀI TOÀN BỘ CHIỀU CAO TRANG -->
+    <div class="document-bg">
+        <div class="bg-texture"></div>
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+        <div class="bg-shape shape-4"></div>
+        <div class="bg-shape shape-5"></div>
+        <div class="bg-shape shape-6"></div>
     </div>
 
     <header>
@@ -144,33 +165,35 @@
 
     <section class="hero">
         <div class="container">
-            <div class="reveal-wrapper">
+            <div class="reveal-bottom">
                 <div class="tilt-wrapper profile-pic-container"><img src="avtweb.jpg" alt="Đặng Minh Phát" class="profile-img"></div>
             </div>
-            <div class="reveal-wrapper"><div class="tilt-wrapper hero-badge">Cử nhân Sư phạm Toán học</div></div>
-            <div class="reveal-wrapper"><h1 class="tilt-wrapper">ĐẶNG MINH PHÁT</h1></div>
-            <div class="reveal-wrapper"><p class="tilt-wrapper">Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p></div>
+            <div class="reveal-bottom"><div class="tilt-wrapper hero-badge">Cử nhân Sư phạm Toán học</div></div>
+            <div class="reveal-bottom"><h1 class="tilt-wrapper">ĐẶNG MINH PHÁT</h1></div>
+            <div class="reveal-bottom"><p class="tilt-wrapper">Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p></div>
         </div>
     </section>
 
     <section id="thong-tin">
         <div class="container">
-            <div class="reveal-wrapper section-header"><h2 class="tilt-wrapper section-title">Thông tin cá nhân</h2></div>
+            <div class="reveal-bottom section-header"><h2 class="tilt-wrapper section-title">Thông tin cá nhân</h2></div>
             <div class="info-grid">
-                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Ngày tháng năm sinh</div><div class="info-value">14/03/2002</div></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi sinh</div><div class="info-value">Đồng Tháp</div></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ văn hóa</div><div class="info-value">12/12</div></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ chuyên môn</div><div class="info-value">Cử nhân Sư phạm Toán học</div></div></div>
-                <div class="reveal-wrapper" style="grid-column: 1 / -1;"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi công tác</div><div class="info-value">Trường THPT Cao Lãnh 2</div></div></div>
+                <!-- Các thẻ so le: Trái - Phải -->
+                <div class="reveal-left"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Ngày tháng năm sinh</div><div class="info-value">14/03/2002</div></div></div>
+                <div class="reveal-right"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi sinh</div><div class="info-value">Đồng Tháp</div></div></div>
+                <div class="reveal-left"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ văn hóa</div><div class="info-value">12/12</div></div></div>
+                <div class="reveal-right"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ chuyên môn</div><div class="info-value">Cử nhân Sư phạm Toán học</div></div></div>
+                <!-- Thẻ trải dài từ dưới lên -->
+                <div class="reveal-bottom" style="grid-column: 1 / -1;"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi công tác</div><div class="info-value">Trường THPT Cao Lãnh 2</div></div></div>
             </div>
         </div>
     </section>
 
     <section id="nang-luc">
         <div class="container">
-            <div class="reveal-wrapper section-header"><h2 class="tilt-wrapper section-title">Năng lực & Chuyên môn</h2></div>
+            <div class="reveal-bottom section-header"><h2 class="tilt-wrapper section-title">Năng lực & Chuyên môn</h2></div>
             <div class="skills-grid">
-                <div class="reveal-wrapper">
+                <div class="reveal-left">
                     <div class="tilt-wrapper skill-box glass-card">
                         <h3>Chuyên môn Giảng dạy</h3>
                         <div class="skill-item"><div class="skill-info"><span>Toán THPT (Chân trời sáng tạo)</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div></div>
@@ -178,7 +201,7 @@
                         <div class="skill-item"><div class="skill-info"><span>Biên soạn Bài tập & Tài liệu</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
                     </div>
                 </div>
-                <div class="reveal-wrapper">
+                <div class="reveal-right">
                     <div class="tilt-wrapper skill-box glass-card">
                         <h3>Kỹ năng Bổ trợ</h3>
                         <div class="skill-item"><div class="skill-info"><span>Thiết kế Ấn phẩm (Bìa sách, Slide)</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
@@ -192,30 +215,42 @@
 
     <section id="qua-trinh">
         <div class="container">
-            <div class="reveal-wrapper section-header"><h2 class="tilt-wrapper section-title">Học tập & Công tác</h2></div>
+            <div class="reveal-bottom section-header"><h2 class="tilt-wrapper section-title">Học tập & Công tác</h2></div>
             <div class="timeline">
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2020 - 2024</div></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Sinh viên ngành Sư phạm Toán học</h3><p>Trường Đại học Cần Thơ</p></div></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2025 - Nay</div></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Giáo viên Toán</h3><p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p></div></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2026 - Nay</div></div><div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div></div></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="reveal-left"><div class="tilt-wrapper timeline-date">2020 - 2024</div></div>
+                    <div class="reveal-right" style="width: 100%;"><div class="tilt-wrapper timeline-content glass-card"><h3>Sinh viên ngành Sư phạm Toán học</h3><p>Trường Đại học Cần Thơ</p></div></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="reveal-left"><div class="tilt-wrapper timeline-date">2025 - Nay</div></div>
+                    <div class="reveal-right" style="width: 100%;"><div class="tilt-wrapper timeline-content glass-card"><h3>Giáo viên Toán</h3><p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p></div></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="reveal-left"><div class="tilt-wrapper timeline-date">2026 - Nay</div></div>
+                    <div class="reveal-right" style="width: 100%;"><div class="tilt-wrapper timeline-content glass-card"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div></div>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="so-thich">
         <div class="container">
-            <div class="reveal-wrapper section-header"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
+            <div class="reveal-bottom section-header"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
             <div class="hobbies-grid">
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div></div>
+                <div class="reveal-left"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div></div>
+                <div class="reveal-bottom"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div></div>
+                <div class="reveal-right"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div></div>
             </div>
         </div>
     </section>
 
     <section id="lien-he">
         <div class="container">
-            <div class="reveal-wrapper section-header"><h2 class="tilt-wrapper section-title">Thông tin liên hệ</h2></div>
-            <div class="reveal-wrapper">
+            <div class="reveal-bottom section-header"><h2 class="tilt-wrapper section-title">Thông tin liên hệ</h2></div>
+            <div class="reveal-bottom">
                 <div class="tilt-wrapper glass-card contact-bento">
                     <a href="mailto:dangminhphat14302@gmail.com" class="bento-item span-2"><div class="bento-icon" style="background: #ef4444;">✉️</div><div class="bento-info"><span class="bento-label">Email</span><span class="bento-value">dangminhphat14302@gmail.com</span></div></a>
                     <a href="tel:0816738016" class="bento-item"><div class="bento-icon" style="background: #10b981;">📞</div><div class="bento-info"><span class="bento-label">Điện thoại</span><span class="bento-value">(+84) 816 738 016</span></div></a>
@@ -230,24 +265,30 @@
     </section>
 
     <footer>
-        <div class="container"><p>© Đặng Minh Phát. Creative Aurora & Anti-Lag Physics.</p></div>
+        <div class="container"><p>© Đặng Minh Phát. Cinematic Design & Anti-Lag Physics.</p></div>
     </footer>
 
-    <!-- SCRIPT TỐI ƯU HÓA GPU (CHỐNG GIẬT LAG TRIỆT ĐỂ) -->
+    <!-- SCRIPT ĐÃ TỐI ƯU CỰC KỲ NHẸ (ZERO LAG) -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const wrappers = document.querySelectorAll('.reveal-wrapper');
+            // 1. Quản lý Ẩn/Hiện Đa Hướng
+            const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-bottom');
             
-            // Xử lý ẩn/hiện mượt mà khi cuộn
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
-                    if (e.isIntersecting) e.target.classList.add('revealed');
-                    else e.target.classList.remove('revealed');
+                    if (e.isIntersecting) {
+                        e.target.classList.add('revealed');
+                        // Nếu không muốn khối ẩn đi khi cuộn qua lại, hãy bỏ comment dòng dưới
+                        // revealObserver.unobserve(e.target); 
+                    } else {
+                        e.target.classList.remove('revealed'); 
+                    }
                 });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-            wrappers.forEach(w => revealObserver.observe(w));
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            
+            revealElements.forEach(el => revealObserver.observe(el));
 
-            // Tối ưu hiệu ứng xoay 3D: CHỈ tính toán các khối đang hiển thị trên màn hình
+            // 2. Thuật toán Xoay 3D (Chỉ kích hoạt trên thẻ ĐANG HIỂN THỊ)
             const tilts = Array.from(document.querySelectorAll('.tilt-wrapper')).map(node => ({ node, curr: 0, target: 0, isVisible: false }));
             
             const visibilityObserver = new IntersectionObserver((entries) => {
@@ -255,17 +296,17 @@
                     const t = tilts.find(item => item.node === e.target);
                     if (t) t.isVisible = e.isIntersecting;
                 });
-            }, { rootMargin: "100px" }); // Theo dõi sớm 100px trước khi vào viền màn hình
+            }, { rootMargin: "100px" }); 
             
             tilts.forEach(t => visibilityObserver.observe(t.node));
 
             function renderLoop() {
                 const center = window.innerHeight / 2;
                 tilts.forEach(t => {
-                    if (t.isVisible) { // Bí quyết hết lag: Khối nào khuất thì BỎ QUA không tính toán
+                    if (t.isVisible) { // Bí quyết Zero-Lag: Bỏ qua các thẻ bị khuất
                         const rect = t.node.getBoundingClientRect();
                         const dist = (rect.top + rect.height / 2) - center;
-                        t.target = Math.max(-10, Math.min(10, -(dist / center) * 10)); // Cố định max 10 độ
+                        t.target = Math.max(-8, Math.min(8, -(dist / center) * 10)); // Biên độ nhẹ nhàng
                         t.curr += (t.target - t.curr) * 0.1;
                         t.node.style.transform = `perspective(1200px) rotateX(${t.curr}deg)`;
                     }
