@@ -128,9 +128,6 @@
             padding: 6px;
             background: linear-gradient(135deg, var(--accent), #60a5fa);
             box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
-            /* Bật hiệu ứng 3D */
-            transform-style: preserve-3d;
-            will-change: transform;
         }
 
         .profile-img {
@@ -139,7 +136,7 @@
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid var(--bg-white);
-            background-color: var(--bg-white); /* Màu nền nếu ảnh bị lỗi */
+            background-color: var(--bg-white);
         }
 
         .hero-badge {
@@ -171,13 +168,38 @@
             margin: 0 auto;
         }
 
-        /* Lớp chung cho các khối có hiệu ứng xoay theo scroll */
+        /* ========================================= */
+        /* HIỆU ỨNG KÉO VÀ LĂN VÀO (ANIMATIONS CORE) */
+        /* ========================================= */
         .scroll-rotate {
+            /* Hiệu ứng 3D cơ bản */
             transform-style: preserve-3d;
-            will-change: transform;
-            /* Chuyển động mượt khi hàm JS cập nhật giá trị */
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease; 
+            will-change: transform, opacity, translate, scale, rotate;
+            
+            /* Trạng thái ẨN ban đầu (trước khi lăn vào) */
+            opacity: 0;
+            translate: 0 100px; /* Bị tụt xuống 100px */
+            scale: 0.85; /* Hơi nhỏ lại */
+            rotate: 4deg; /* Nghiêng nhẹ tạo cảm giác đang lăn */
+            
+            /* Chuyển động siêu mượt (cubic-bezier tạo hiệu ứng nảy nhẹ) */
+            transition: 
+                transform 0.1s ease-out, 
+                box-shadow 0.3s ease,
+                opacity 0.8s ease-out, 
+                translate 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                scale 0.8s ease-out,
+                rotate 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
         }
+
+        /* Trạng thái KÍCH HOẠT khi kéo tới (hiển thị) */
+        .scroll-rotate.revealed {
+            opacity: 1;
+            translate: 0 0;
+            scale: 1;
+            rotate: 0deg; /* Thẳng thớm lại */
+        }
+        /* ========================================= */
 
         /* Main Section Styling */
         section {
@@ -227,7 +249,7 @@
             font-size: 1.2rem;
             color: var(--primary);
             font-weight: 600;
-            transform: translateZ(20px); /* Hiệu ứng nổi 3D text bên trong */
+            transform: translateZ(20px); 
         }
 
         /* Hobbies Section */
@@ -257,7 +279,7 @@
         .hobby-icon {
             font-size: 3rem;
             margin-bottom: 16px;
-            transform: translateZ(30px); /* Nổi 3D */
+            transform: translateZ(30px); 
         }
 
         .hobby-card h3 {
@@ -427,8 +449,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <!-- ẢNH ĐẠI DIỆN: Thay đường link ảnh của bạn vào thuộc tính src dưới đây -->
             <div class="profile-pic-container scroll-rotate">
+                <!-- THAY LINK ẢNH TẠI ĐÂY -->
                 <img src="https://via.placeholder.com/400x400/2563eb/ffffff?text=Anh+Dai+Dien" alt="Đặng Minh Phát" class="profile-img">
             </div>
 
@@ -467,7 +489,7 @@
         </div>
     </section>
 
-    <!-- Hobbies Section (Phần mới thêm) -->
+    <!-- Hobbies Section -->
     <section id="so-thich" style="background-color: #f8fafc;">
         <div class="container">
             <h2 class="section-title scroll-rotate">Sở thích</h2>
@@ -541,46 +563,59 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© Đặng Minh Phát. Tích hợp hiệu ứng 3D Scroll Animations.</p>
+            <p>© Đặng Minh Phát. Tích hợp hiệu ứng 3D Scroll Animations & Reveal.</p>
         </div>
     </footer>
 
-    <!-- Script xử lý hiệu ứng "kéo tới đâu khối xoay tới đó" -->
+    <!-- SCRIPT TỔNG HỢP (XỬ LÝ LĂN VÀO + XOAY 3D) -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const rotateElements = document.querySelectorAll('.scroll-rotate');
 
+            // 1. TÍNH TOÁN XOAY 3D (Kéo tới đâu nghiêng tới đó)
             function onScroll() {
                 const windowHeight = window.innerHeight;
                 const windowCenter = windowHeight / 2;
 
                 rotateElements.forEach(el => {
                     const rect = el.getBoundingClientRect();
-                    // Tính tọa độ tâm của element trên màn hình
                     const elCenter = rect.top + (rect.height / 2);
-                    
-                    // Tính khoảng cách từ tâm element đến tâm màn hình
                     const distance = elCenter - windowCenter;
                     
-                    // Giới hạn góc xoay tối đa là 15 độ để chữ dễ đọc
                     const maxAngle = 15;
-                    
-                    // Tính góc xoay tỷ lệ thuận với khoảng cách (chia cho windowCenter để lấy tỷ lệ)
-                    // Dấu âm (-) giúp tạo cảm giác lật tự nhiên khi cuộn
                     let rotateX = -(distance / windowCenter) * maxAngle;
-                    
-                    // Giới hạn không vượt quá maxAngle
                     rotateX = Math.max(-maxAngle, Math.min(maxAngle, rotateX));
 
-                    // Áp dụng transform. perspective(1200px) để tạo chiều sâu không gian
                     el.style.transform = `perspective(1200px) rotateX(${rotateX}deg)`;
                 });
             }
 
-            // Gọi 1 lần lúc mới tải trang
-            onScroll();
-            
-            // Lắng nghe sự kiện cuộn chuột
+            // 2. KÍCH HOẠT LĂN VÀO KHI KÉO CHUỘT TỚI (Intersection Observer)
+            const observerOptions = {
+                threshold: 0.15, // Đợi khối xuất hiện 15% mới lăn vào
+                rootMargin: "0px 0px -50px 0px" // Bắt đầu tính khi cách đáy màn hình 50px
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let delayCount = 0; // Biến đếm để tạo hiệu ứng gợn sóng (stagger)
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Thêm timeout lệch nhau 150ms nếu có nhiều thẻ hiện ra cùng lúc
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, delayCount * 150);
+                        
+                        delayCount++;
+                        // Dừng theo dõi sau khi đã xuất hiện (để không bị giật nháy khi lướt ngược lên)
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            // Bắt đầu theo dõi tất cả các khối và gọi hàm tính góc 3D
+            rotateElements.forEach(el => observer.observe(el));
+            onScroll(); 
             window.addEventListener('scroll', onScroll, { passive: true });
         });
     </script>
