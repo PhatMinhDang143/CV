@@ -17,49 +17,19 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
         html { scroll-behavior: smooth; }
-        body { 
-            background-color: #1a0b2e; color: var(--text-main); 
-            line-height: 1.6; overflow-x: hidden; perspective: 1200px; 
-        }
+        body { background-color: #1a0b2e; color: var(--text-main); line-height: 1.6; overflow-x: hidden; perspective: 1200px; }
 
-        .landscape-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden;
-            background: linear-gradient(180deg, #fcd34d 0%, #f97316 40%, #e11d48 70%, #4c1d95 100%);
-        }
-        .sun {
-            position: absolute; top: 20%; left: 50%; width: 200px; height: 200px;
-            background: #fffbeb; border-radius: 50%; transform: translateX(-50%);
-            box-shadow: 0 0 80px #fcd34d, 0 0 150px #f97316;
-            animation: sunPulse 10s infinite alternate;
-        }
-        .hill {
-            position: absolute; bottom: 0; width: 150vw; height: 60vh;
-            border-radius: 50% 50% 0 0; filter: drop-shadow(0 -10px 20px rgba(0,0,0,0.2));
-            will-change: border-radius, transform;
-        }
-        .hill-bg {
-            left: -25vw; background: #e11d48; bottom: 15vh; opacity: 0.8;
-            animation: morphHill 15s ease-in-out infinite alternate;
-        }
-        .hill-mg {
-            right: -20vw; background: #7e22ce; bottom: 5vh;
-            animation: morphHill2 18s ease-in-out infinite alternate-reverse;
-        }
-        .hill-fg {
-            left: -10vw; width: 120vw; height: 40vh; background: #1a0b2e;
-            animation: morphHill3 20s ease-in-out infinite alternate;
-        }
-        .orb {
-            position: absolute; bottom: -20px; width: 8px; height: 8px;
-            background: #fcd34d; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(252, 211, 77, 0.4);
-            animation: floatUp 8s linear infinite;
-        }
+        .landscape-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; background: linear-gradient(180deg, #fcd34d 0%, #f97316 40%, #e11d48 70%, #4c1d95 100%); }
+        .sun { position: absolute; top: 20%; left: 50%; width: 200px; height: 200px; background: #fffbeb; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 80px #fcd34d, 0 0 150px #f97316; animation: sunPulse 10s infinite alternate; }
+        .hill { position: absolute; bottom: 0; width: 150vw; height: 60vh; border-radius: 50% 50% 0 0; filter: drop-shadow(0 -10px 20px rgba(0,0,0,0.2)); will-change: border-radius, transform; }
+        .hill-bg { left: -25vw; background: #e11d48; bottom: 15vh; opacity: 0.8; animation: morphHill 15s ease-in-out infinite alternate; }
+        .hill-mg { right: -20vw; background: #7e22ce; bottom: 5vh; animation: morphHill2 18s ease-in-out infinite alternate-reverse; }
+        .hill-fg { left: -10vw; width: 120vw; height: 40vh; background: #1a0b2e; animation: morphHill3 20s ease-in-out infinite alternate; }
+        .orb { position: absolute; bottom: -20px; width: 8px; height: 8px; background: #fcd34d; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(252, 211, 77, 0.4); animation: floatUp 8s linear infinite; }
         .orb:nth-child(5) { left: 20%; animation-duration: 12s; animation-delay: 1s; }
         .orb:nth-child(6) { left: 45%; animation-duration: 9s; animation-delay: 4s; }
         .orb:nth-child(7) { left: 75%; animation-duration: 15s; animation-delay: 2s; }
         .orb:nth-child(8) { left: 90%; animation-duration: 10s; animation-delay: 5s; }
-
         @keyframes sunPulse { 0% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(1.05); } }
         @keyframes morphHill { 0% { border-radius: 40% 60% 0 0; transform: translateY(0); } 100% { border-radius: 60% 40% 0 0; transform: translateY(20px); } }
         @keyframes morphHill2 { 0% { border-radius: 50% 50% 0 0; transform: translateY(10px) translateX(20px); } 100% { border-radius: 45% 55% 0 0; transform: translateY(-10px) translateX(-20px); } }
@@ -67,10 +37,7 @@
         @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(-60vh) scale(0.5); opacity: 0; } }
 
         .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-        header {
-            background-color: rgba(26, 11, 46, 0.4); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-        }
+        header { background-color: rgba(26, 11, 46, 0.4); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; height: 72px; }
         .logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--accent); }
@@ -81,16 +48,9 @@
         .nav-links a:hover::after { width: 100%; }
 
         .hero { padding-top: 180px; padding-bottom: 100px; text-align: center; position: relative; }
-        .profile-pic-container {
-            width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px;
-            background: linear-gradient(135deg, var(--accent), #e11d48); box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3);
-        }
+        .profile-pic-container { width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, var(--accent), #e11d48); box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3); }
         .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #1a0b2e; }
-        .hero-badge {
-            background: var(--bg-glass); backdrop-filter: blur(10px); color: var(--accent-light); padding: 8px 20px;
-            border-radius: 100px; font-size: 0.9rem; font-weight: 700; display: inline-block; margin-bottom: 24px;
-            border: 1px solid var(--border-glass);
-        }
+        .hero-badge { background: var(--bg-glass); backdrop-filter: blur(10px); color: var(--accent-light); padding: 8px 20px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; display: inline-block; margin-bottom: 24px; border: 1px solid var(--border-glass); }
         .hero h1 { font-size: 3.5rem; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
@@ -100,11 +60,7 @@
 
         section { padding: 80px 0; position: relative; }
         .section-title { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 50px; text-align: center; }
-        
-        .glass-card {
-            background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--border-glass);
-            border-radius: var(--radius); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
+        .glass-card { background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }
 
         .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
         .info-card { padding: 30px; transition: 0.3s; }
@@ -124,89 +80,53 @@
         .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), transparent); border-radius: 3px; }
         .timeline-item { position: relative; margin-bottom: 60px; }
         .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-dot {
-            position: absolute; left: -40px; top: 8px; width: 18px; height: 18px; border-radius: 50%;
-            background-color: var(--accent); border: 4px solid #1a0b2e; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.3);
-            z-index: 2; transition: 0.3s;
-        }
+        .timeline-dot { position: absolute; left: -40px; top: 8px; width: 18px; height: 18px; border-radius: 50%; background-color: var(--accent); border: 4px solid #1a0b2e; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.3); z-index: 2; transition: 0.3s; }
         .timeline-item:hover .timeline-dot { transform: scale(1.4); background-color: #fff; border-color: var(--accent); box-shadow: 0 0 15px rgba(249, 115, 22, 0.6); }
-        .timeline-date {
-            font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 10px; display: inline-block;
-            background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px;
-        }
+        .timeline-date { font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 10px; display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; }
         .timeline-content { padding: 30px; transition: 0.3s; }
         .timeline-content:hover { border-color: rgba(249, 115, 22, 0.5); }
         .timeline-content h3 { font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 6px; transform: translateZ(20px); }
         .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500; }
 
-        /* CSS MỚI CHO PHẦN THÔNG TIN LIÊN HỆ THEO HÌNH ẢNH */
-        .contact-box { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 24px; 
-            padding: 40px; 
-            border-radius: var(--radius); 
+        /* BỐ CỤC LƯỚI LIÊN HỆ MỚI */
+        .contact-grid-container { padding: 40px; }
+        .contact-grid { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; 
         }
-        
-        .contact-item { 
-            display: flex; 
-            align-items: center; 
-            gap: 20px; 
-            padding: 20px; 
-            transition: 0.3s; 
-            text-align: left;
+        .contact-card {
+            flex: 1 1 30%; min-width: 280px; max-width: 340px;
+            display: flex; align-items: center; gap: 16px;
+            padding: 20px 24px; border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none; transition: 0.3s;
         }
-        
-        .contact-item:hover { 
-            transform: translateZ(30px) scale(1.03); 
-            border-color: rgba(249, 115, 22, 0.5); 
-            box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.3); 
+        .contact-card:hover {
+            background: rgba(0, 0, 0, 0.4); border-color: rgba(16, 185, 129, 0.5);
+            transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
-        
-        .icon-circle {
-            width: 50px; 
-            height: 50px; 
-            min-width: 50px;
-            background-color: #10b981; /* Màu xanh lá như ảnh yêu cầu */
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 1.4rem; 
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-            transition: 0.3s;
+        .contact-card-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            background-color: #10b981; display: flex; justify-content: center; align-items: center;
+            font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .contact-card-info { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
+        .contact-card-label {
+            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+        }
+        .contact-card-value {
+            font-size: 1.05rem; font-weight: 700; color: #fff;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
 
-        .contact-item:hover .icon-circle {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        .contact-text h4 { 
-            font-size: 0.85rem; 
-            color: var(--text-muted); 
-            margin-bottom: 4px; 
-            font-weight: 600; 
-            text-transform: uppercase;
-        }
-        
-        .contact-text p, .contact-text a { 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            color: #fff; 
-            text-decoration: none; 
-            transition: 0.3s; 
-        }
-        
-        .contact-text a:hover { 
-            color: var(--accent-light); 
-        }
-        
         footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(26,11,46,0.8); }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .info-grid, .hobbies-grid, .contact-box { grid-template-columns: 1fr; }
+            .info-grid, .hobbies-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
+            .contact-grid-container { padding: 20px; }
+            .contact-card { min-width: 100%; max-width: 100%; }
         }
     </style>
 </head>
@@ -254,36 +174,11 @@
         <div class="container">
             <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Thông tin cá nhân</h2></div>
             <div class="info-grid">
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper info-card glass-card">
-                        <div class="info-label">Ngày tháng năm sinh</div>
-                        <div class="info-value">14/03/2002</div>
-                    </div>
-                </div>
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper info-card glass-card">
-                        <div class="info-label">Nơi sinh</div>
-                        <div class="info-value">Đồng Tháp</div>
-                    </div>
-                </div>
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper info-card glass-card">
-                        <div class="info-label">Trình độ văn hóa</div>
-                        <div class="info-value">12/12</div>
-                    </div>
-                </div>
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper info-card glass-card">
-                        <div class="info-label">Trình độ chuyên môn</div>
-                        <div class="info-value">Cử nhân Sư phạm Toán học</div>
-                    </div>
-                </div>
-                <div class="reveal-wrapper" style="grid-column: 1 / -1;">
-                    <div class="tilt-wrapper info-card glass-card">
-                        <div class="info-label">Nơi công tác</div>
-                        <div class="info-value">Trường THPT Cao Lãnh 2</div>
-                    </div>
-                </div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Ngày tháng năm sinh</div><div class="info-value">14/03/2002</div></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi sinh</div><div class="info-value">Đồng Tháp</div></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ văn hóa</div><div class="info-value">12/12</div></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Trình độ chuyên môn</div><div class="info-value">Cử nhân Sư phạm Toán học</div></div></div>
+                <div class="reveal-wrapper" style="grid-column: 1 / -1;"><div class="tilt-wrapper info-card glass-card"><div class="info-label">Nơi công tác</div><div class="info-value">Trường THPT Cao Lãnh 2</div></div></div>
             </div>
         </div>
     </section>
@@ -292,24 +187,9 @@
         <div class="container">
             <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
             <div class="hobbies-grid">
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper hobby-card glass-card">
-                        <div class="hobby-icon">♟️</div>
-                        <h3>Cờ vua</h3>
-                    </div>
-                </div>
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper hobby-card glass-card">
-                        <div class="hobby-icon">⚽</div>
-                        <h3>Bóng đá</h3>
-                    </div>
-                </div>
-                <div class="reveal-wrapper">
-                    <div class="tilt-wrapper hobby-card glass-card">
-                        <div class="hobby-icon">🎸</div>
-                        <h3>Guitar</h3>
-                    </div>
-                </div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div></div>
             </div>
         </div>
     </section>
@@ -321,32 +201,17 @@
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2020 - 2024</div></div>
-                    <div class="reveal-wrapper">
-                        <div class="tilt-wrapper timeline-content glass-card">
-                            <h3>Sinh viên ngành Sư phạm Toán học</h3>
-                            <p>Trường Đại học Cần Thơ</p>
-                        </div>
-                    </div>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Sinh viên ngành Sư phạm Toán học</h3><p>Trường Đại học Cần Thơ</p></div></div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2025 - Nay</div></div>
-                    <div class="reveal-wrapper">
-                        <div class="tilt-wrapper timeline-content glass-card">
-                            <h3>Giáo viên Toán</h3>
-                            <p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p>
-                        </div>
-                    </div>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Giáo viên Toán</h3><p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p></div></div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2026 - Nay</div></div>
-                    <div class="reveal-wrapper">
-                        <div class="tilt-wrapper timeline-content glass-card">
-                            <h3>Học viên cao học chuyên ngành Toán ứng dụng</h3>
-                            <p>Đại học Cần Thơ</p>
-                        </div>
-                    </div>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div></div>
                 </div>
             </div>
         </div>
@@ -356,53 +221,44 @@
         <div class="container">
             <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Thông tin liên hệ</h2></div>
             <div class="reveal-wrapper">
-                <div class="tilt-wrapper contact-box glass-card">
-                    
-                    <!-- Điện thoại -->
-                    <div class="contact-item glass-card tilt-wrapper">
-                        <div class="icon-circle">📞</div>
-                        <div class="contact-text">
-                            <h4>Số điện thoại</h4>
-                            <p><a href="tel:0816738016">(+84) 816 738 016</a></p>
+                <div class="tilt-wrapper glass-card contact-grid-container">
+                    <div class="contact-grid">
+                        <a href="tel:0816738016" class="contact-card">
+                            <div class="contact-card-icon">📞</div>
+                            <div class="contact-card-info">
+                                <span class="contact-card-label">Số điện thoại</span>
+                                <span class="contact-card-value">(+84) 816 738 016</span>
+                            </div>
+                        </a>
+                        <a href="mailto:dangminhphat14302@gmail.com" class="contact-card" title="dangminhphat14302@gmail.com">
+                            <div class="contact-card-icon">✉️</div>
+                            <div class="contact-card-info">
+                                <span class="contact-card-label">Email</span>
+                                <span class="contact-card-value">dangminhphat14302@gmail.com</span>
+                            </div>
+                        </a>
+                        <div class="contact-card">
+                            <div class="contact-card-icon">📍</div>
+                            <div class="contact-card-info">
+                                <span class="contact-card-label">Địa chỉ</span>
+                                <span class="contact-card-value" style="white-space: normal;">Phường Cao Lãnh, Đồng Tháp</span>
+                            </div>
                         </div>
+                        <a href="https://github.com/PhatMinhDang143" target="_blank" class="contact-card">
+                            <div class="contact-card-icon">💻</div>
+                            <div class="contact-card-info">
+                                <span class="contact-card-label">GitHub</span>
+                                <span class="contact-card-value">PhatMinhDang143</span>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ph%C3%A1t-%C4%91%E1%BA%B7ng-7634b6266/" target="_blank" class="contact-card">
+                            <div class="contact-card-icon">💼</div>
+                            <div class="contact-card-info">
+                                <span class="contact-card-label">LinkedIn</span>
+                                <span class="contact-card-value">Phát Đặng</span>
+                            </div>
+                        </a>
                     </div>
-
-                    <!-- Email -->
-                    <div class="contact-item glass-card tilt-wrapper">
-                        <div class="icon-circle">✉️</div>
-                        <div class="contact-text">
-                            <h4>Email</h4>
-                            <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
-                        </div>
-                    </div>
-
-                    <!-- Địa chỉ -->
-                    <div class="contact-item glass-card tilt-wrapper">
-                        <div class="icon-circle">📍</div>
-                        <div class="contact-text">
-                            <h4>Địa chỉ</h4>
-                            <p>Phường Cao Lãnh, Đồng Tháp</p>
-                        </div>
-                    </div>
-
-                    <!-- GitHub -->
-                    <div class="contact-item glass-card tilt-wrapper">
-                        <div class="icon-circle">💻</div>
-                        <div class="contact-text">
-                            <h4>GitHub</h4>
-                            <p><a href="https://github.com/PhatMinhDang143" target="_blank">PhatMinhDang143</a></p>
-                        </div>
-                    </div>
-
-                    <!-- LinkedIn -->
-                    <div class="contact-item glass-card tilt-wrapper">
-                        <div class="icon-circle">💼</div>
-                        <div class="contact-text">
-                            <h4>LinkedIn</h4>
-                            <p><a href="https://www.linkedin.com/in/ph%C3%A1t-%C4%91%E1%BA%B7ng-7634b6266/" target="_blank">Phát Đặng</a></p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -421,13 +277,8 @@
                     else e.target.classList.remove('revealed');
                 });
             }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
             wrappers.forEach(w => observer.observe(w));
-
-            const tilts = Array.from(document.querySelectorAll('.tilt-wrapper')).map(node => ({
-                node, curr: 0, target: 0
-            }));
-
+            const tilts = Array.from(document.querySelectorAll('.tilt-wrapper')).map(node => ({ node, curr: 0, target: 0 }));
             function renderLoop() {
                 const center = window.innerHeight / 2;
                 tilts.forEach(t => {
