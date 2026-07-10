@@ -139,27 +139,67 @@
         .timeline-content h3 { font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 6px; transform: translateZ(20px); }
         .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500; }
 
-        .contact-box { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 50px; border-radius: var(--radius); }
-        .contact-method { text-align: center; padding: 30px 20px; transition: 0.3s; }
-        .contact-method:hover { transform: translateZ(30px) scale(1.03); border-color: rgba(249, 115, 22, 0.5); box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.3); }
+        /* CSS MỚI CHO PHẦN THÔNG TIN LIÊN HỆ THEO HÌNH ẢNH */
+        .contact-box { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 24px; 
+            padding: 40px; 
+            border-radius: var(--radius); 
+        }
         
-        .mail-icon-wrapper { position: relative; width: 60px; height: 50px; margin: 0 auto 16px; display: flex; align-items: flex-end; justify-content: center; }
-        .mail-envelope { width: 48px; height: 32px; background-color: var(--accent); border-radius: 4px; position: relative; z-index: 3; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .mail-envelope::before { content: ''; position: absolute; bottom: 0; left: 0; border-left: 24px solid transparent; border-right: 24px solid transparent; border-bottom: 20px solid rgba(0,0,0,0.2); z-index: 3; }
-        .mail-flap { position: absolute; top: 0; left: 0; border-left: 24px solid transparent; border-right: 24px solid transparent; border-top: 18px solid var(--accent); transform-origin: top; z-index: 4; transition: 0.5s; }
-        .mail-letter { position: absolute; top: 4px; left: 6px; width: 36px; height: 24px; background-color: #fff; border-radius: 2px; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: 0.6s; }
-        .mail-letter span { display: block; height: 3px; background-color: #cbd5e1; border-radius: 2px; }
-        .mail-letter span:nth-child(1) { width: 20px; }
-        .mail-letter span:nth-child(2) { width: 14px; }
-        .contact-method:hover .mail-flap { transform: rotateX(180deg); }
-        .contact-method:hover .mail-letter { transform: translateY(-26px) rotate(5deg) scale(1.1); }
+        .contact-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            padding: 20px; 
+            transition: 0.3s; 
+            text-align: left;
+        }
         
-        .phone-icon-wrapper { font-size: 2.2rem; margin-bottom: 16px; color: var(--text-muted); transition: 0.3s; display: inline-block; }
-        .contact-method:hover .phone-icon-wrapper { color: var(--accent); animation: ringPhone 0.3s ease-in-out infinite alternate; }
-        @keyframes ringPhone { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(-12deg) scale(1.1); } 100% { transform: rotate(12deg) scale(1.1); } }
+        .contact-item:hover { 
+            transform: translateZ(30px) scale(1.03); 
+            border-color: rgba(249, 115, 22, 0.5); 
+            box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.3); 
+        }
         
-        .contact-method h4 { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-        .contact-method p, .contact-method a { font-size: 1.25rem; font-weight: 700; color: var(--accent-light); text-decoration: none; }
+        .icon-circle {
+            width: 50px; 
+            height: 50px; 
+            min-width: 50px;
+            background-color: #10b981; /* Màu xanh lá như ảnh yêu cầu */
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 1.4rem; 
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            transition: 0.3s;
+        }
+
+        .contact-item:hover .icon-circle {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .contact-text h4 { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            margin-bottom: 4px; 
+            font-weight: 600; 
+            text-transform: uppercase;
+        }
+        
+        .contact-text p, .contact-text a { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            color: #fff; 
+            text-decoration: none; 
+            transition: 0.3s; 
+        }
+        
+        .contact-text a:hover { 
+            color: var(--accent-light); 
+        }
         
         footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(26,11,46,0.8); }
 
@@ -317,16 +357,52 @@
             <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Thông tin liên hệ</h2></div>
             <div class="reveal-wrapper">
                 <div class="tilt-wrapper contact-box glass-card">
-                    <div class="contact-method glass-card">
-                        <div class="mail-icon-wrapper"><div class="mail-envelope"><div class="mail-flap"></div><div class="mail-letter"><span></span><span></span></div></div></div>
-                        <h4>Địa chỉ email</h4>
-                        <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
+                    
+                    <!-- Điện thoại -->
+                    <div class="contact-item glass-card tilt-wrapper">
+                        <div class="icon-circle">📞</div>
+                        <div class="contact-text">
+                            <h4>Số điện thoại</h4>
+                            <p><a href="tel:0816738016">(+84) 816 738 016</a></p>
+                        </div>
                     </div>
-                    <div class="contact-method glass-card">
-                        <div class="phone-icon-wrapper">☎</div>
-                        <h4>Số điện thoại</h4>
-                        <p><a href="tel:0816738016">0816738016</a></p>
+
+                    <!-- Email -->
+                    <div class="contact-item glass-card tilt-wrapper">
+                        <div class="icon-circle">✉️</div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
+                        </div>
                     </div>
+
+                    <!-- Địa chỉ -->
+                    <div class="contact-item glass-card tilt-wrapper">
+                        <div class="icon-circle">📍</div>
+                        <div class="contact-text">
+                            <h4>Địa chỉ</h4>
+                            <p>Phường Cao Lãnh, Đồng Tháp</p>
+                        </div>
+                    </div>
+
+                    <!-- GitHub -->
+                    <div class="contact-item glass-card tilt-wrapper">
+                        <div class="icon-circle">💻</div>
+                        <div class="contact-text">
+                            <h4>GitHub</h4>
+                            <p><a href="https://github.com/PhatMinhDang143" target="_blank">PhatMinhDang143</a></p>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn -->
+                    <div class="contact-item glass-card tilt-wrapper">
+                        <div class="icon-circle">💼</div>
+                        <div class="contact-text">
+                            <h4>LinkedIn</h4>
+                            <p><a href="https://www.linkedin.com/in/ph%C3%A1t-%C4%91%E1%BA%B7ng-7634b6266/" target="_blank">Phát Đặng</a></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
