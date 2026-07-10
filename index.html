@@ -41,8 +41,8 @@
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; height: 72px; }
         .logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 32px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; position: relative; transition: 0.3s; }
+        .nav-links { display: flex; gap: 24px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; position: relative; transition: 0.3s; }
         .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background-color: var(--accent); transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
         .nav-links a:hover::after { width: 100%; }
@@ -68,6 +68,19 @@
         .info-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700; }
         .info-value { font-size: 1.2rem; color: #fff; font-weight: 700; transform: translateZ(20px); }
 
+        /* SKILLS SECTION CSS */
+        .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .skill-box { padding: 40px 30px; }
+        .skill-box h3 { color: var(--accent-light); margin-bottom: 24px; font-size: 1.4rem; text-align: center; letter-spacing: -0.5px; transform: translateZ(20px); }
+        .skill-item { margin-bottom: 22px; transform: translateZ(15px); }
+        .skill-item:last-child { margin-bottom: 0; }
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; color: #fff; font-weight: 600; font-size: 0.95rem; }
+        .skill-bar-bg { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden; }
+        .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 10px; transform-origin: left; transform: scaleX(0); }
+        .reveal-wrapper.revealed .skill-bar-fill { animation: fillBar 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.2s; }
+        @keyframes fillBar { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+        .skill-item:hover .skill-bar-fill { filter: brightness(1.2); box-shadow: 0 0 15px rgba(249, 115, 22, 0.6); }
+
         .hobbies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .hobby-card { padding: 40px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s; }
         .hobby-card:hover { border-color: rgba(249, 115, 22, 0.5); }
@@ -88,42 +101,20 @@
         .timeline-content h3 { font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 6px; transform: translateZ(20px); }
         .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500; }
 
-        /* BỐ CỤC LƯỚI LIÊN HỆ MỚI */
         .contact-grid-container { padding: 40px; }
-        .contact-grid { 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; 
-        }
-        .contact-card {
-            flex: 1 1 30%; min-width: 280px; max-width: 340px;
-            display: flex; align-items: center; gap: 16px;
-            padding: 20px 24px; border-radius: 12px;
-            background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.05);
-            text-decoration: none; transition: 0.3s;
-        }
-        .contact-card:hover {
-            background: rgba(0, 0, 0, 0.4); border-color: rgba(16, 185, 129, 0.5);
-            transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        .contact-card-icon {
-            width: 48px; height: 48px; border-radius: 50%;
-            background-color: #10b981; display: flex; justify-content: center; align-items: center;
-            font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-        }
+        .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .contact-card { flex: 1 1 30%; min-width: 280px; max-width: 340px; display: flex; align-items: center; gap: 16px; padding: 20px 24px; border-radius: 12px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none; transition: 0.3s; }
+        .contact-card:hover { background: rgba(0, 0, 0, 0.4); border-color: rgba(16, 185, 129, 0.5); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+        .contact-card-icon { width: 48px; height: 48px; border-radius: 50%; background-color: #10b981; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
         .contact-card-info { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
-        .contact-card-label {
-            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
-        }
-        .contact-card-value {
-            font-size: 1.05rem; font-weight: 700; color: #fff;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
+        .contact-card-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .contact-card-value { font-size: 1.05rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(26,11,46,0.8); }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .info-grid, .hobbies-grid { grid-template-columns: 1fr; }
+            .info-grid, .skills-grid, .hobbies-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .contact-grid-container { padding: 20px; }
             .contact-card { min-width: 100%; max-width: 100%; }
@@ -149,8 +140,9 @@
                 <div class="logo">Đặng Minh <span>Phát</span></div>
                 <ul class="nav-links">
                     <li><a href="#thong-tin">Thông tin</a></li>
-                    <li><a href="#so-thich">Sở thích</a></li>
+                    <li><a href="#nang-luc">Năng lực</a></li>
                     <li><a href="#qua-trinh">Quá trình</a></li>
+                    <li><a href="#so-thich">Sở thích</a></li>
                     <li><a href="#lien-he">Liên hệ</a></li>
                 </ul>
             </div>
@@ -183,13 +175,54 @@
         </div>
     </section>
 
-    <section id="so-thich">
+    <!-- SECTION NĂNG LỰC & CHUYÊN MÔN (MỚI THÊM) -->
+    <section id="nang-luc">
         <div class="container">
-            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
-            <div class="hobbies-grid">
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div></div>
-                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div></div>
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Năng lực & Chuyên môn</h2></div>
+            <div class="skills-grid">
+                
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper skill-box glass-card">
+                        <h3>Chuyên môn Giảng dạy</h3>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Toán THPT (Chân trời sáng tạo)</span><span>95%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Tích hợp phương pháp STEM</span><span>85%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Biên soạn Bài tập & Tài liệu</span><span>90%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper skill-box glass-card">
+                        <h3>Kỹ năng Bổ trợ</h3>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Thiết kế Ấn phẩm (Bìa sách, Slide)</span><span>90%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Quản lý & Điều phối Lớp học nhóm</span><span>85%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Nhiếp ảnh (Cinematic Aesthetic)</span><span>75%</span></div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 75%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -213,6 +246,17 @@
                     <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2026 - Nay</div></div>
                     <div class="reveal-wrapper"><div class="tilt-wrapper timeline-content glass-card"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="so-thich">
+        <div class="container">
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
+            <div class="hobbies-grid">
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div></div>
+                <div class="reveal-wrapper"><div class="tilt-wrapper hobby-card glass-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div></div>
             </div>
         </div>
     </section>
