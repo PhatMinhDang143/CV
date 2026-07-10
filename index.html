@@ -6,369 +6,162 @@
     <title>Đặng Minh Phát - Portfolio</title>
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-light: #eff6ff;
-            --text-main: #1e293b;
-            --text-muted: #475569;
-            --bg-main: #f8fafc;
+            --accent: #f97316;
+            --accent-light: #fcd34d;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --bg-glass: rgba(30, 11, 46, 0.5);
+            --border-glass: rgba(255, 255, 255, 0.1);
             --radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #1a0b2e; color: var(--text-main); 
+            line-height: 1.6; overflow-x: hidden; perspective: 1200px; 
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        .landscape-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden;
+            background: linear-gradient(180deg, #fcd34d 0%, #f97316 40%, #e11d48 70%, #4c1d95 100%);
         }
-
-        html {
-            scroll-behavior: smooth;
+        .sun {
+            position: absolute; top: 20%; left: 50%; width: 200px; height: 200px;
+            background: #fffbeb; border-radius: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 80px #fcd34d, 0 0 150px #f97316;
+            animation: sunPulse 10s infinite alternate;
         }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            perspective: 1200px;
+        .hill {
+            position: absolute; bottom: 0; width: 150vw; height: 60vh;
+            border-radius: 50% 50% 0 0; filter: drop-shadow(0 -10px 20px rgba(0,0,0,0.2));
+            will-change: border-radius, transform;
         }
-
-        /* ========================================= */
-        /* HÌNH NỀN ĐỘNG & BIẾN ĐỔI HÌNH DẠNG (BLOBS) */
-        /* ========================================= */
-        .animated-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background-color: var(--bg-main);
+        .hill-bg {
+            left: -25vw; background: #e11d48; bottom: 15vh; opacity: 0.8;
+            animation: morphHill 15s ease-in-out infinite alternate;
         }
-
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            opacity: 0.6;
-            border-radius: 50%;
-            animation: morphAndMove 20s ease-in-out infinite alternate;
-            will-change: transform, border-radius;
+        .hill-mg {
+            right: -20vw; background: #7e22ce; bottom: 5vh;
+            animation: morphHill2 18s ease-in-out infinite alternate-reverse;
         }
-
-        .blob-1 {
-            top: -10%; left: -10%;
-            width: 50vw; height: 50vw;
-            background: rgba(37, 99, 235, 0.3); /* Xanh dương đậm */
+        .hill-fg {
+            left: -10vw; width: 120vw; height: 40vh; background: #1a0b2e;
+            animation: morphHill3 20s ease-in-out infinite alternate;
         }
-
-        .blob-2 {
-            top: 40%; right: -20%;
-            width: 60vw; height: 60vw;
-            background: rgba(147, 197, 253, 0.4); /* Xanh dương nhạt */
-            animation-delay: -5s;
-            animation-duration: 25s;
+        .orb {
+            position: absolute; bottom: -20px; width: 8px; height: 8px;
+            background: #fcd34d; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(252, 211, 77, 0.4);
+            animation: floatUp 8s linear infinite;
         }
+        .orb:nth-child(5) { left: 20%; animation-duration: 12s; animation-delay: 1s; }
+        .orb:nth-child(6) { left: 45%; animation-duration: 9s; animation-delay: 4s; }
+        .orb:nth-child(7) { left: 75%; animation-duration: 15s; animation-delay: 2s; }
+        .orb:nth-child(8) { left: 90%; animation-duration: 10s; animation-delay: 5s; }
 
-        .blob-3 {
-            bottom: -20%; left: 10%;
-            width: 55vw; height: 55vw;
-            background: rgba(167, 139, 250, 0.25); /* Tím nhạt */
-            animation-delay: -10s;
-            animation-duration: 30s;
-        }
+        @keyframes sunPulse { 0% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(1.05); } }
+        @keyframes morphHill { 0% { border-radius: 40% 60% 0 0; transform: translateY(0); } 100% { border-radius: 60% 40% 0 0; transform: translateY(20px); } }
+        @keyframes morphHill2 { 0% { border-radius: 50% 50% 0 0; transform: translateY(10px) translateX(20px); } 100% { border-radius: 45% 55% 0 0; transform: translateY(-10px) translateX(-20px); } }
+        @keyframes morphHill3 { 0% { border-radius: 55% 45% 0 0; } 100% { border-radius: 45% 55% 0 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(-60vh) scale(0.5); opacity: 0; } }
 
-        /* Keyframe chuyển động và biến dạng liên tục */
-        @keyframes morphAndMove {
-            0% { 
-                transform: translate(0, 0) scale(1) rotate(0deg); 
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
-            }
-            50% { 
-                transform: translate(5vw, 10vh) scale(1.1) rotate(90deg); 
-                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; 
-            }
-            100% { 
-                transform: translate(-5vw, 5vh) scale(0.9) rotate(180deg); 
-                border-radius: 40% 50% 60% 40% / 40% 50% 50% 50%; 
-            }
-        }
-        /* ========================================= */
-
-        .container {
-            width: 100%; max-width: 1140px;
-            margin: 0 auto; padding: 0 24px;
-        }
-
+        .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
         header {
-            background-color: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000;
+            background-color: rgba(26, 11, 46, 0.4); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
         }
-
-        .nav-wrapper {
-            display: flex; justify-content: space-between;
-            align-items: center; height: 72px;
-        }
-
-        .logo {
-            font-size: 1.25rem; font-weight: 800;
-            color: var(--primary); letter-spacing: -0.5px;
-            text-transform: uppercase;
-        }
-
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+        .logo { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--accent); }
-
         .nav-links { display: flex; gap: 32px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-muted);
-            font-weight: 600; font-size: 0.95rem;
-            position: relative; transition: var(--transition);
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0;
-            width: 0; height: 2px; background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; position: relative; transition: 0.3s; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background-color: var(--accent); transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
         .nav-links a:hover::after { width: 100%; }
 
-        .hero {
-            padding-top: 180px; padding-bottom: 100px;
-            text-align: center; position: relative;
-        }
-
+        .hero { padding-top: 180px; padding-bottom: 100px; text-align: center; position: relative; }
         .profile-pic-container {
-            width: 180px; height: 180px; margin: 0 auto 30px auto;
-            border-radius: 50%; padding: 6px;
-            background: linear-gradient(135deg, var(--accent), #60a5fa);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+            width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px;
+            background: linear-gradient(135deg, var(--accent), #e11d48); box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3);
         }
-
-        .profile-img {
-            width: 100%; height: 100%; object-fit: cover;
-            border-radius: 50%; border: 4px solid #fff;
-            background-color: #fff;
-        }
-
+        .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #1a0b2e; }
         .hero-badge {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            color: var(--accent); padding: 8px 20px;
-            border-radius: 100px; font-size: 0.9rem; font-weight: 700;
-            display: inline-block; margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--bg-glass); backdrop-filter: blur(10px); color: var(--accent-light); padding: 8px 20px;
+            border-radius: 100px; font-size: 0.9rem; font-weight: 700; display: inline-block; margin-bottom: 24px;
+            border: 1px solid var(--border-glass);
         }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        .hero h1 {
-            font-size: 3.5rem; font-weight: 800; color: var(--primary);
-            letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem; color: var(--text-muted);
-            max-width: 650px; margin: 0 auto;
-        }
-
-        /* ========================================= */
-        /* HIỆU ỨNG LĂN VÀO (KHÔNG CHỨA TRANSFORM)   */
-        /* (Để không xung đột với JS xoay 3D)        */
-        /* ========================================= */
-        .scroll-rotate {
-            /* Giữ transform-style để JS thêm xoay 3D */
-            transform-style: preserve-3d;
-            will-change: transform, opacity, translate, scale;
-            
-            /* Trạng thái ẩn */
-            opacity: 0;
-            translate: 0 80px; 
-            scale: 0.9; 
-            
-            /* LƯU Ý: Tuyệt đối không transition "transform" ở đây để chống giật */
-            transition: 
-                opacity 0.7s ease-out, 
-                translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                scale 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); 
-        }
-
-        .scroll-rotate.revealed {
-            opacity: 1;
-            translate: 0 0;
-            scale: 1;
-        }
-        /* ========================================= */
+        .reveal-wrapper { opacity: 0; transform: translateY(60px) scale(0.95); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: opacity, transform; }
+        .reveal-wrapper.revealed { opacity: 1; transform: translateY(0) scale(1); }
+        .tilt-wrapper { transform-style: preserve-3d; will-change: transform; }
 
         section { padding: 80px 0; position: relative; }
-
-        .section-title {
-            font-size: 2rem; font-weight: 800; color: var(--primary);
-            margin-bottom: 50px; text-align: center; letter-spacing: -0.5px;
-        }
-
-        /* KHỐI KÍNH (GLASSMORPHISM) CHO CÁC THẺ */
+        .section-title { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 50px; text-align: center; }
+        
         .glass-card {
-            background: rgba(255, 255, 255, 0.65); /* Trong suốt để thấy nền */
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: var(--radius);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--border-glass);
+            border-radius: var(--radius); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
 
         .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        
-        .info-card { padding: 30px; transition: var(--transition); }
-        .info-card:hover {
-            border-color: rgba(37, 99, 235, 0.4);
-            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
-        }
-
-        .info-label {
-            font-size: 0.85rem; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 8px; font-weight: 700;
-        }
-
-        .info-value {
-            font-size: 1.2rem; color: var(--primary);
-            font-weight: 700; transform: translateZ(20px); 
-        }
+        .info-card { padding: 30px; transition: 0.3s; }
+        .info-card:hover { border-color: rgba(249, 115, 22, 0.5); box-shadow: 0 20px 40px -10px rgba(249, 115, 22, 0.2); }
+        .info-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700; }
+        .info-value { font-size: 1.2rem; color: #fff; font-weight: 700; transform: translateZ(20px); }
 
         .hobbies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-
-        .hobby-card {
-            padding: 40px 20px; text-align: center;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: var(--transition);
-        }
-        .hobby-card:hover { border-color: rgba(37, 99, 235, 0.4); }
-
-        .hobby-icon {
-            font-size: 3rem; margin-bottom: 16px;
-            transform: translateZ(30px); transition: transform 0.3s ease;
-        }
-        .hobby-card:hover .hobby-icon {
-            animation: floatIcon 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatIcon {
-            0% { transform: translateZ(30px) translateY(0); }
-            100% { transform: translateZ(50px) translateY(-10px); }
-        }
-
-        .hobby-card h3 {
-            font-size: 1.25rem; color: var(--primary);
-            font-weight: 700; transform: translateZ(20px);
-        }
+        .hobby-card { padding: 40px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s; }
+        .hobby-card:hover { border-color: rgba(249, 115, 22, 0.5); }
+        .hobby-icon { font-size: 3rem; margin-bottom: 16px; transform: translateZ(30px); transition: 0.3s; }
+        .hobby-card:hover .hobby-icon { animation: floatIcon 1s ease-in-out infinite alternate; }
+        @keyframes floatIcon { 0% { transform: translateZ(30px) translateY(0); } 100% { transform: translateZ(50px) translateY(-10px); } }
+        .hobby-card h3 { font-size: 1.25rem; color: #fff; font-weight: 700; transform: translateZ(20px); }
 
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 40px; }
-        .timeline::before {
-            content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 3px;
-            background: linear-gradient(to bottom, var(--accent), rgba(147, 197, 253, 0.3));
-            border-radius: 3px;
-        }
-
+        .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), transparent); border-radius: 3px; }
         .timeline-item { position: relative; margin-bottom: 60px; }
         .timeline-item:last-child { margin-bottom: 0; }
-
         .timeline-dot {
-            position: absolute; left: -40px; top: 8px; width: 18px; height: 18px;
-            border-radius: 50%; background-color: var(--accent);
-            border: 4px solid var(--bg-main);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
-            z-index: 2; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: absolute; left: -40px; top: 8px; width: 18px; height: 18px; border-radius: 50%;
+            background-color: var(--accent); border: 4px solid #1a0b2e; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.3);
+            z-index: 2; transition: 0.3s;
         }
-        .timeline-item:hover .timeline-dot {
-            transform: scale(1.4); background-color: #fff;
-            border-color: var(--accent); box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
-        }
-
+        .timeline-item:hover .timeline-dot { transform: scale(1.4); background-color: #fff; border-color: var(--accent); box-shadow: 0 0 15px rgba(249, 115, 22, 0.6); }
         .timeline-date {
-            font-size: 1rem; font-weight: 800; color: var(--accent);
-            margin-bottom: 10px; display: inline-block;
-            background: rgba(239, 246, 255, 0.8); backdrop-filter: blur(4px);
-            padding: 4px 12px; border-radius: 20px;
+            font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 10px; display: inline-block;
+            background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px;
         }
+        .timeline-content { padding: 30px; transition: 0.3s; }
+        .timeline-content:hover { border-color: rgba(249, 115, 22, 0.5); }
+        .timeline-content h3 { font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 6px; transform: translateZ(20px); }
+        .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500; }
 
-        .timeline-content { padding: 30px; transition: var(--transition); }
-        .timeline-content:hover { border-color: rgba(37, 99, 235, 0.4); }
+        .contact-box { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 50px; border-radius: var(--radius); }
+        .contact-method { text-align: center; padding: 30px 20px; transition: 0.3s; }
+        .contact-method:hover { transform: translateZ(30px) scale(1.03); border-color: rgba(249, 115, 22, 0.5); box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.3); }
         
-        .timeline-content h3 {
-            font-size: 1.25rem; color: var(--primary);
-            font-weight: 700; margin-bottom: 6px; transform: translateZ(20px);
-        }
-        .timeline-content p { transform: translateZ(10px); color: var(--text-muted); font-weight: 500;}
-
-        .contact-box {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
-            padding: 50px; border-radius: var(--radius);
-        }
-
-        .contact-method {
-            text-align: center; padding: 30px 20px;
-            transition: var(--transition);
-        }
-        .contact-method:hover {
-            transform: translateZ(30px) scale(1.03);
-            border-color: rgba(37, 99, 235, 0.4);
-            box-shadow: 0 15px 30px -10px rgba(37,99,235, 0.15);
-        }
-
-        /* THƯ & ĐIỆN THOẠI */
-        .mail-icon-wrapper {
-            position: relative; width: 60px; height: 50px; margin: 0 auto 16px;
-            display: flex; align-items: flex-end; justify-content: center;
-        }
-        .mail-envelope {
-            width: 48px; height: 32px; background-color: var(--accent); border-radius: 4px;
-            position: relative; z-index: 3; box-shadow: 0 4px 10px rgba(37,99,235,0.2);
-        }
-        .mail-envelope::before { 
-            content: ''; position: absolute; bottom: 0; left: 0;
-            border-left: 24px solid transparent; border-right: 24px solid transparent;
-            border-bottom: 20px solid rgba(0,0,0,0.15); z-index: 3;
-        }
-        .mail-flap {
-            position: absolute; top: 0; left: 0;
-            border-left: 24px solid transparent; border-right: 24px solid transparent;
-            border-top: 18px solid var(--accent);
-            transform-origin: top; z-index: 4;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .mail-letter {
-            position: absolute; top: 4px; left: 6px; width: 36px; height: 24px;
-            background-color: #fff; border-radius: 2px; z-index: 2;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        .mail-icon-wrapper { position: relative; width: 60px; height: 50px; margin: 0 auto 16px; display: flex; align-items: flex-end; justify-content: center; }
+        .mail-envelope { width: 48px; height: 32px; background-color: var(--accent); border-radius: 4px; position: relative; z-index: 3; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .mail-envelope::before { content: ''; position: absolute; bottom: 0; left: 0; border-left: 24px solid transparent; border-right: 24px solid transparent; border-bottom: 20px solid rgba(0,0,0,0.2); z-index: 3; }
+        .mail-flap { position: absolute; top: 0; left: 0; border-left: 24px solid transparent; border-right: 24px solid transparent; border-top: 18px solid var(--accent); transform-origin: top; z-index: 4; transition: 0.5s; }
+        .mail-letter { position: absolute; top: 4px; left: 6px; width: 36px; height: 24px; background-color: #fff; border-radius: 2px; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: 0.6s; }
         .mail-letter span { display: block; height: 3px; background-color: #cbd5e1; border-radius: 2px; }
         .mail-letter span:nth-child(1) { width: 20px; }
         .mail-letter span:nth-child(2) { width: 14px; }
-
         .contact-method:hover .mail-flap { transform: rotateX(180deg); }
         .contact-method:hover .mail-letter { transform: translateY(-26px) rotate(5deg) scale(1.1); }
-
-        .phone-icon-wrapper {
-            font-size: 2.2rem; margin-bottom: 16px; color: var(--text-muted);
-            transition: color 0.3s; display: inline-block;
-        }
-        .contact-method:hover .phone-icon-wrapper {
-            color: var(--accent); animation: ringPhone 0.3s ease-in-out infinite alternate;
-        }
-        @keyframes ringPhone {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(-12deg) scale(1.1); }
-            100% { transform: rotate(12deg) scale(1.1); }
-        }
-
+        
+        .phone-icon-wrapper { font-size: 2.2rem; margin-bottom: 16px; color: var(--text-muted); transition: 0.3s; display: inline-block; }
+        .contact-method:hover .phone-icon-wrapper { color: var(--accent); animation: ringPhone 0.3s ease-in-out infinite alternate; }
+        @keyframes ringPhone { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(-12deg) scale(1.1); } 100% { transform: rotate(12deg) scale(1.1); } }
+        
         .contact-method h4 { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-        .contact-method p, .contact-method a { font-size: 1.25rem; font-weight: 700; color: var(--accent); text-decoration: none; }
-
-        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; }
+        .contact-method p, .contact-method a { font-size: 1.25rem; font-weight: 700; color: var(--accent-light); text-decoration: none; }
+        
+        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(26,11,46,0.8); }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
@@ -379,11 +172,15 @@
 </head>
 <body>
 
-    <!-- KHỐI HÌNH NỀN ĐỘNG Ở DƯỚI CÙNG -->
-    <div class="animated-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <div class="landscape-bg">
+        <div class="sun"></div>
+        <div class="hill hill-bg"></div>
+        <div class="hill hill-mg"></div>
+        <div class="hill hill-fg"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
     </div>
 
     <header>
@@ -402,41 +199,50 @@
 
     <section class="hero">
         <div class="container">
-            <div class="profile-pic-container scroll-rotate">
-                <!-- Đã giữ đúng tên avtweb.jpg theo yêu cầu GitHub của bạn -->
-                <img src="avtweb.jpg" alt="Đặng Minh Phát" class="profile-img">
+            <div class="reveal-wrapper">
+                <div class="tilt-wrapper profile-pic-container">
+                    <img src="avtweb.jpg" alt="Đặng Minh Phát" class="profile-img">
+                </div>
             </div>
-
-            <span class="hero-badge scroll-rotate">Cử nhân Sư phạm Toán học</span>
-            <h1 class="scroll-rotate">ĐẶNG MINH PHÁT</h1>
-            <p class="scroll-rotate">Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p>
+            <div class="reveal-wrapper"><div class="tilt-wrapper hero-badge">Cử nhân Sư phạm Toán học</div></div>
+            <div class="reveal-wrapper"><h1 class="tilt-wrapper">ĐẶNG MINH PHÁT</h1></div>
+            <div class="reveal-wrapper"><p class="tilt-wrapper">Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p></div>
         </div>
     </section>
 
     <section id="thong-tin">
         <div class="container">
-            <h2 class="section-title scroll-rotate">Thông tin cá nhân</h2>
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Thông tin cá nhân</h2></div>
             <div class="info-grid">
-                <!-- THÊM CLASS glass-card CHO TẤT CẢ THẺ THÔNG TIN -->
-                <div class="info-card glass-card scroll-rotate">
-                    <div class="info-label">Ngày tháng năm sinh</div>
-                    <div class="info-value">14/03/2002</div>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper info-card glass-card">
+                        <div class="info-label">Ngày tháng năm sinh</div>
+                        <div class="info-value">14/03/2002</div>
+                    </div>
                 </div>
-                <div class="info-card glass-card scroll-rotate">
-                    <div class="info-label">Nơi sinh</div>
-                    <div class="info-value">Đồng Tháp</div>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper info-card glass-card">
+                        <div class="info-label">Nơi sinh</div>
+                        <div class="info-value">Đồng Tháp</div>
+                    </div>
                 </div>
-                <div class="info-card glass-card scroll-rotate">
-                    <div class="info-label">Trình độ văn hóa</div>
-                    <div class="info-value">12/12</div>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper info-card glass-card">
+                        <div class="info-label">Trình độ văn hóa</div>
+                        <div class="info-value">12/12</div>
+                    </div>
                 </div>
-                <div class="info-card glass-card scroll-rotate">
-                    <div class="info-label">Trình độ chuyên môn</div>
-                    <div class="info-value">Cử nhân Sư phạm Toán học</div>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper info-card glass-card">
+                        <div class="info-label">Trình độ chuyên môn</div>
+                        <div class="info-value">Cử nhân Sư phạm Toán học</div>
+                    </div>
                 </div>
-                <div class="info-card glass-card scroll-rotate" style="grid-column: 1 / -1;">
-                    <div class="info-label">Nơi công tác</div>
-                    <div class="info-value">Trường THPT Cao Lãnh 2</div>
+                <div class="reveal-wrapper" style="grid-column: 1 / -1;">
+                    <div class="tilt-wrapper info-card glass-card">
+                        <div class="info-label">Nơi công tác</div>
+                        <div class="info-value">Trường THPT Cao Lãnh 2</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -444,19 +250,25 @@
 
     <section id="so-thich">
         <div class="container">
-            <h2 class="section-title scroll-rotate">Sở thích</h2>
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Sở thích</h2></div>
             <div class="hobbies-grid">
-                <div class="hobby-card glass-card scroll-rotate">
-                    <div class="hobby-icon">♟️</div>
-                    <h3>Cờ vua</h3>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper hobby-card glass-card">
+                        <div class="hobby-icon">♟️</div>
+                        <h3>Cờ vua</h3>
+                    </div>
                 </div>
-                <div class="hobby-card glass-card scroll-rotate">
-                    <div class="hobby-icon">⚽</div>
-                    <h3>Bóng đá</h3>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper hobby-card glass-card">
+                        <div class="hobby-icon">⚽</div>
+                        <h3>Bóng đá</h3>
+                    </div>
                 </div>
-                <div class="hobby-card glass-card scroll-rotate">
-                    <div class="hobby-icon">🎸</div>
-                    <h3>Guitar</h3>
+                <div class="reveal-wrapper">
+                    <div class="tilt-wrapper hobby-card glass-card">
+                        <div class="hobby-icon">🎸</div>
+                        <h3>Guitar</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -464,30 +276,36 @@
 
     <section id="qua-trinh">
         <div class="container">
-            <h2 class="section-title scroll-rotate">Quá trình học tập & công tác</h2>
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Quá trình học tập & công tác</h2></div>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-date scroll-rotate">2020 - 2024</div>
-                    <div class="timeline-content glass-card scroll-rotate">
-                        <h3>Sinh viên ngành Sư phạm Toán học</h3>
-                        <p>Trường Đại học Cần Thơ</p>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2020 - 2024</div></div>
+                    <div class="reveal-wrapper">
+                        <div class="tilt-wrapper timeline-content glass-card">
+                            <h3>Sinh viên ngành Sư phạm Toán học</h3>
+                            <p>Trường Đại học Cần Thơ</p>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-date scroll-rotate">2025 - Nay</div>
-                    <div class="timeline-content glass-card scroll-rotate">
-                        <h3>Giáo viên Toán</h3>
-                        <p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2025 - Nay</div></div>
+                    <div class="reveal-wrapper">
+                        <div class="tilt-wrapper timeline-content glass-card">
+                            <h3>Giáo viên Toán</h3>
+                            <p>Trường THPT Cao Lãnh 2 – Đồng Tháp</p>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-date scroll-rotate">2026 - Nay</div>
-                    <div class="timeline-content glass-card scroll-rotate">
-                        <h3>Học viên cao học chuyên ngành Toán ứng dụng</h3>
-                        <p>Đại học Cần Thơ</p>
+                    <div class="reveal-wrapper"><div class="tilt-wrapper timeline-date">2026 - Nay</div></div>
+                    <div class="reveal-wrapper">
+                        <div class="tilt-wrapper timeline-content glass-card">
+                            <h3>Học viên cao học chuyên ngành Toán ứng dụng</h3>
+                            <p>Đại học Cần Thơ</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -496,93 +314,58 @@
 
     <section id="lien-he">
         <div class="container">
-            <h2 class="section-title scroll-rotate">Thông tin liên hệ</h2>
-            <div class="contact-box glass-card scroll-rotate">
-                <div class="contact-method glass-card">
-                    <div class="mail-icon-wrapper">
-                        <div class="mail-envelope">
-                            <div class="mail-flap"></div>
-                            <div class="mail-letter">
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
+            <div class="reveal-wrapper"><h2 class="tilt-wrapper section-title">Thông tin liên hệ</h2></div>
+            <div class="reveal-wrapper">
+                <div class="tilt-wrapper contact-box glass-card">
+                    <div class="contact-method glass-card">
+                        <div class="mail-icon-wrapper"><div class="mail-envelope"><div class="mail-flap"></div><div class="mail-letter"><span></span><span></span></div></div></div>
+                        <h4>Địa chỉ email</h4>
+                        <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
                     </div>
-                    <h4>Địa chỉ email</h4>
-                    <p><a href="mailto:dangminhphat14302@gmail.com">dangminhphat14302@gmail.com</a></p>
-                </div>
-                <div class="contact-method glass-card">
-                    <div class="phone-icon-wrapper">☎</div>
-                    <h4>Số điện thoại</h4>
-                    <p><a href="tel:0816738016">0816738016</a></p>
+                    <div class="contact-method glass-card">
+                        <div class="phone-icon-wrapper">☎</div>
+                        <h4>Số điện thoại</h4>
+                        <p><a href="tel:0816738016">0816738016</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>© Đặng Minh Phát. Nền tảng Glassmorphism & Animated Backgrounds siêu mượt.</p>
-        </div>
+        <div class="container"><p>© Đặng Minh Phát. Creative Animation & Beyond Limits UI.</p></div>
     </footer>
 
-    <!-- SCRIPT ĐÃ FIX LỖI GIẬT LÁC BẰNG LERP + rAF -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const rotateElements = document.querySelectorAll('.scroll-rotate');
-            
-            // Lưu trữ dữ liệu nội suy (Lerp) cho từng phần tử
-            const elementsData = Array.from(rotateElements).map(el => ({
-                node: el,
-                currentAngle: 0, // Góc xoay hiện tại
-                targetAngle: 0   // Góc xoay mục tiêu khi scroll tới
+            const wrappers = document.querySelectorAll('.reveal-wrapper');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) e.target.classList.add('revealed');
+                    else e.target.classList.remove('revealed');
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            wrappers.forEach(w => observer.observe(w));
+
+            const tilts = Array.from(document.querySelectorAll('.tilt-wrapper')).map(node => ({
+                node, curr: 0, target: 0
             }));
 
-            // 1. VÒNG LẶP RENDER (60-120 FPS) CHỐNG GIẬT LAG
             function renderLoop() {
-                const windowCenter = window.innerHeight / 2;
-
-                elementsData.forEach(data => {
-                    const rect = data.node.getBoundingClientRect();
-                    const elCenter = rect.top + (rect.height / 2);
-                    const distance = elCenter - windowCenter;
-                    
-                    // Giới hạn biên độ xoay (tối đa 12 độ để sang trọng hơn)
-                    const maxAngle = 12; 
-                    let target = -(distance / windowCenter) * maxAngle;
-                    data.targetAngle = Math.max(-maxAngle, Math.min(maxAngle, target));
-
-                    // Công thức Lerp thần thánh: Nội suy tuyến tính giúp mượt mà tuyệt đối
-                    // 0.08 là tốc độ đuổi theo (càng nhỏ càng trễ mượt, càng lớn càng nhanh)
-                    data.currentAngle += (data.targetAngle - data.currentAngle) * 0.08;
-                    
-                    // Áp dụng biến đổi liên tục mà KHÔNG qua CSS transition
-                    data.node.style.transform = `perspective(1200px) rotateX(${data.currentAngle}deg)`;
-                });
-
-                requestAnimationFrame(renderLoop);
-            }
-            
-            // Khởi động vòng lặp render
-            requestAnimationFrame(renderLoop);
-
-            // 2. CUỘN 2 CHIỀU (CHỈ QUẢN LÝ ẨN/HIỆN QUA OPACITY VÀ TRANSLATE)
-            const observerOptions = {
-                threshold: 0.15, 
-                rootMargin: "0px 0px -50px 0px"
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    } else {
-                        entry.target.classList.remove('revealed');
+                const center = window.innerHeight / 2;
+                tilts.forEach(t => {
+                    const rect = t.node.getBoundingClientRect();
+                    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+                        const dist = (rect.top + rect.height / 2) - center;
+                        t.target = Math.max(-12, Math.min(12, -(dist / center) * 12));
+                        t.curr += (t.target - t.curr) * 0.1;
+                        t.node.style.transform = `perspective(1200px) rotateX(${t.curr}deg)`;
                     }
                 });
-            }, observerOptions);
-
-            rotateElements.forEach(el => observer.observe(el));
+                requestAnimationFrame(renderLoop);
+            }
+            requestAnimationFrame(renderLoop);
         });
     </script>
 </body>
