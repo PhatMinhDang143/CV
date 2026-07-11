@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặng Minh Phát - Portfolio</title>
+    
+    <!-- Nhúng thư viện FontAwesome chuẩn hóa Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --accent: #ff6254;
@@ -13,29 +17,17 @@
             --border-glass: rgba(255, 255, 255, 0.15);
             --radius: 20px;
             --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            --scroll-progress: 0s; /* Biến toàn cục để nhận % scroll từ Javascript */
+            --scroll-progress: 0s;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
         html { scroll-behavior: smooth; }
         body { background-color: #1b063d; color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
         /* ========================================= */
-        /* PHÉP THUẬT ZERO-LAG: KẾT NỐI SVG VỚI SCROLL*/
+        /* SVG BACKGROUND - ZERO LAG                 */
         /* ========================================= */
-        .svg-background {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; pointer-events: none; background-color: #ffefba;
-        }
-        
-        /* Ghi đè toàn bộ animation của SVG: Đóng băng và điều khiển bằng cuộn chuột */
-        .svg-background svg * {
-            animation-play-state: paused !important;
-            animation-duration: 1s !important;
-            animation-iteration-count: 1 !important;
-            animation-fill-mode: both !important;
-            animation-delay: var(--scroll-progress) !important;
-            will-change: transform, opacity;
-        }
+        .svg-background { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; background-color: #ffefba; }
+        .svg-background svg * { animation-play-state: paused !important; animation-duration: 1s !important; animation-iteration-count: 1 !important; animation-fill-mode: both !important; animation-delay: var(--scroll-progress) !important; will-change: transform, opacity; }
 
         .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
         header { background-color: rgba(20, 5, 45, 0.85); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: 0.3s; }
@@ -52,13 +44,11 @@
         .profile-pic-container { width: 180px; height: 180px; margin: 0 auto 30px auto; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, var(--accent-light), var(--accent)); box-shadow: 0 20px 40px rgba(255, 98, 84, 0.4); }
         .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #1b063d; }
         .hero-badge { background: rgba(20, 5, 45, 0.85); color: var(--accent-light); padding: 8px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; display: inline-block; margin-bottom: 24px; border: 1px solid var(--border-glass); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        
-        /* Chữ có viền bóng đổ dày để nổi bật trên nền trời sáng */
         .hero h1 { font-size: 3.5rem; font-weight: 900; color: #fff; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.2; text-shadow: 0 4px 25px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5); }
         .hero p { font-size: 1.25rem; font-weight: 600; color: #f8fafc; max-width: 650px; margin: 0 auto; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
 
         /* ========================================= */
-        /* HIỆU ỨNG TRƯỢT ĐA HƯỚNG MƯỢT MÀ           */
+        /* HIỆU ỨNG TRƯỢT ĐA HƯỚNG                   */
         /* ========================================= */
         .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -70,7 +60,6 @@
         .section-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: inline-block; color: #fff; position: relative; padding-bottom: 15px; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
         .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 5px; background: linear-gradient(90deg, var(--accent-light), var(--accent)); border-radius: 5px; box-shadow: 0 0 15px rgba(255, 98, 84, 0.8); }
         
-        /* KHỐI BENTO CARD ĐEN NHÁM (KHÔNG BLUR, KHÔNG LAG) */
         .bento-card { background: linear-gradient(135deg, rgba(25, 10, 50, 0.9), rgba(15, 5, 30, 0.95)); border: 1px solid var(--border-glass); border-radius: var(--radius); box-shadow: 0 15px 35px rgba(0,0,0,0.5); padding: 30px; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
         .bento-card:hover { border-color: rgba(255, 98, 84, 0.6); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 98, 84, 0.2); }
 
@@ -78,7 +67,8 @@
         .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .info-item { display: flex; flex-direction: column; gap: 8px; padding: 20px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
         .info-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
-        .info-icon { font-size: 1.5rem; color: var(--accent-light); margin-bottom: 4px; }
+        .info-icon { font-size: 1.5rem; color: var(--accent-light); margin-bottom: 4px; transition: 0.3s; }
+        .info-item:hover .info-icon { color: var(--accent); transform: scale(1.1); }
         .info-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
         .info-value { font-size: 1.15rem; color: #fff; font-weight: 700; }
 
@@ -107,39 +97,55 @@
         /* SỞ THÍCH */
         .hobbies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .hobby-card { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
-        .hobby-icon { font-size: 3.5rem; margin-bottom: 16px; transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .hobby-card:hover .hobby-icon { transform: scale(1.2) translateY(-10px); text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .hobby-icon { font-size: 3.5rem; margin-bottom: 16px; color: var(--accent-light); transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .hobby-card:hover .hobby-icon { transform: scale(1.2) translateY(-10px); color: var(--accent); text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .hobby-card h3 { font-size: 1.3rem; color: #fff; font-weight: 700; }
 
-        /* LIÊN HỆ BENTO BOX */
-        .contact-bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .contact-item { display: flex; align-items: center; gap: 18px; padding: 24px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.05); text-decoration: none; transition: 0.3s; }
-        .contact-item.span-2 { grid-column: span 2; }
-        .contact-item:hover { transform: translateY(-5px); background: rgba(255,255,255,0.09); border-color: var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
-        .contact-icon { width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #fff; font-family: sans-serif; }
-        .contact-info { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
-        .contact-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-        .contact-value { font-size: 1.1rem; font-weight: 700; color: #fff; word-break: break-word; }
+        /* ========================================= */
+        /* CTA & CONTACT MỚI CHUẨN UX/UI             */
+        /* ========================================= */
+        .contact-cta-wrapper { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+        
+        .cta-btn { display: flex; align-items: center; gap: 16px; padding: 16px 36px; border-radius: 50px; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: fit-content; }
+        .cta-btn i { font-size: 1.8rem; color: #fff; }
+        .cta-text { display: flex; flex-direction: column; text-align: left; }
+        .cta-title { color: #fff; font-weight: 800; font-size: 1.15rem; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.5px; }
+        .cta-sub { color: rgba(255,255,255,0.9); font-size: 0.85rem; font-weight: 500; }
+        
+        /* Màu đặc trưng Zalo */
+        .btn-zalo { background: linear-gradient(135deg, #0068ff, #0054cc); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-zalo:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 104, 255, 0.4); background: linear-gradient(135deg, #0073ff, #005bee); }
+        
+        /* Màu đặc trưng Phone/Call */
+        .btn-phone { background: linear-gradient(135deg, #10b981, #059669); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-phone:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4); background: linear-gradient(135deg, #34d399, #059669); }
 
-        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(15, 5, 30, 0.95); }
+        /* Danh sách liên hệ đơn giản */
+        .simple-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+        .simple-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 100px; color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+        .simple-item:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .simple-item i { font-size: 1.2rem; color: var(--accent-light); transition: 0.3s; }
+        .simple-item:hover i { color: var(--accent); }
+
+        footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(27, 6, 61, 0.8); backdrop-filter: blur(10px); }
 
         @media (max-width: 850px) {
             .hero h1 { font-size: 2.5rem; }
             .info-grid { grid-template-columns: repeat(2, 1fr); }
             .skills-grid, .hobbies-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .contact-bento { grid-template-columns: repeat(2, 1fr); }
-            .contact-item.span-2 { grid-column: span 2; }
+            .cta-wrapper { flex-direction: column; align-items: stretch; }
+            .cta-btn { width: 100%; justify-content: center; text-align: center; }
+            .cta-text { text-align: center; }
         }
         @media (max-width: 600px) {
-            .info-grid, .contact-bento { grid-template-columns: 1fr; }
-            .contact-item.span-2 { grid-column: span 1; }
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ĐÂY LÀ SVG BACKGROUND TUYỆT ĐẸP BẠN CUNG CẤP, ĐÃ ĐƯỢC DỌN SẠCH TEXT -->
+    <!-- SVG BACKGROUND -->
     <div class="svg-background">
         <svg id="esa06W5jl3A1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 100 700 400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
             <style><![CDATA[
@@ -177,10 +183,11 @@
         </svg>
     </div>
 
+    <!-- NỘI DUNG CHÍNH TRANG WEB -->
     <header>
         <div class="container">
             <div class="nav-wrapper">
-                <div class="logo"> <span>Đặng Minh Phát</span></div>
+                <div class="logo">Đặng Minh <span>Phát</span></div>
                 <ul class="nav-links">
                     <li><a href="#thong-tin">Thông tin</a></li>
                     <li><a href="#nang-luc">Năng lực</a></li>
@@ -197,34 +204,36 @@
             <div class="reveal-bottom">
                 <div class="profile-pic-container"><img src="avtweb.jpg" alt="Đặng Minh Phát" class="profile-img"></div>
             </div>
-            <div class="reveal-bottom"><div class="hero-badge">Học Toán Chill chill tới chiều</div></div>
+            <div class="reveal-bottom"><div class="hero-badge">Cử nhân Sư phạm Toán học</div></div>
             <div class="reveal-bottom"><h1>ĐẶNG MINH PHÁT</h1></div>
             <div class="reveal-bottom"><p>Giáo viên Toán tại trường THPT Cao Lãnh 2 & Học viên cao học chuyên ngành Toán ứng dụng</p></div>
         </div>
     </section>
 
+    <!-- THÔNG TIN CÁ NHÂN -->
     <section id="thong-tin">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Thông tin cá nhân</h2></div>
             <div class="bento-card reveal-left">
                 <div class="info-grid">
-                    <div class="info-item"><span class="info-icon">🎂</span><span class="info-label">Ngày sinh</span><span class="info-value">14/03/2002</span></div>
-                    <div class="info-item"><span class="info-icon">🏠</span><span class="info-label">Nơi sinh</span><span class="info-value">Đồng Tháp</span></div>
-                    <div class="info-item"><span class="info-icon">🎓</span><span class="info-label">Văn hóa</span><span class="info-value">12/12</span></div>
-                    <div class="info-item"><span class="info-icon">📜</span><span class="info-label">Chuyên môn</span><span class="info-value">Cử nhân SP Toán</span></div>
-                    <div class="info-item" style="grid-column: span 2;"><span class="info-icon">🏫</span><span class="info-label">Nơi công tác</span><span class="info-value">Trường THPT Cao Lãnh 2</span></div>
+                    <div class="info-item"><i class="fa-solid fa-calendar-days info-icon"></i><span class="info-label">Ngày sinh</span><span class="info-value">14/03/2002</span></div>
+                    <div class="info-item"><i class="fa-solid fa-location-dot info-icon"></i><span class="info-label">Nơi sinh</span><span class="info-value">Đồng Tháp</span></div>
+                    <div class="info-item"><i class="fa-solid fa-graduation-cap info-icon"></i><span class="info-label">Văn hóa</span><span class="info-value">12/12</span></div>
+                    <div class="info-item"><i class="fa-solid fa-certificate info-icon"></i><span class="info-label">Chuyên môn</span><span class="info-value">Cử nhân SP Toán</span></div>
+                    <div class="info-item" style="grid-column: span 2;"><i class="fa-solid fa-school info-icon"></i><span class="info-label">Nơi công tác</span><span class="info-value">Trường THPT Cao Lãnh 2</span></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- NĂNG LỰC CHUYÊN MÔN -->
     <section id="nang-luc">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Năng lực & Chuyên môn</h2></div>
             <div class="skills-grid">
                 <div class="bento-card reveal-left skill-box">
                     <h3>Chuyên môn Giảng dạy</h3>
-                    <div class="skill-item"><div class="skill-info"><span>Toán THPT </span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div></div>
+                    <div class="skill-item"><div class="skill-info"><span>Toán THPT (Chân trời sáng tạo)</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Tích hợp phương pháp STEM</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Biên soạn Bài tập & Tài liệu</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
                 </div>
@@ -232,12 +241,13 @@
                     <h3>Kỹ năng Bổ trợ</h3>
                     <div class="skill-item"><div class="skill-info"><span>Thiết kế Ấn phẩm (Bìa sách, Slide)</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Quản lý & Điều phối Lớp học nhóm</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div></div>
-                    <div class="skill-item"><div class="skill-info"><span>Ứng dụng CNTT & AI</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
+                    <div class="skill-item"><div class="skill-info"><span>Nhiếp ảnh (Cinematic Aesthetic)</span><span>75%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 75%;"></div></div></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- QUÁ TRÌNH -->
     <section id="qua-trinh">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Học tập & Công tác</h2></div>
@@ -255,40 +265,74 @@
                 <div class="timeline-item reveal-left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">2026 - Nay</div>
-                    <div class="bento-card timeline-content"><h3>Học viên cao học - chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div>
+                    <div class="bento-card timeline-content"><h3>Học viên cao học chuyên ngành Toán ứng dụng</h3><p>Đại học Cần Thơ</p></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- SỞ THÍCH -->
     <section id="so-thich">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Sở thích</h2></div>
             <div class="hobbies-grid">
-                <div class="bento-card reveal-left hobby-card"><div class="hobby-icon">♟️</div><h3>Cờ vua</h3></div>
-                <div class="bento-card reveal-bottom hobby-card"><div class="hobby-icon">⚽</div><h3>Bóng đá</h3></div>
-                <div class="bento-card reveal-right hobby-card"><div class="hobby-icon">🎸</div><h3>Guitar</h3></div>
+                <div class="bento-card reveal-left hobby-card"><i class="fa-solid fa-chess hobby-icon"></i><h3>Cờ vua</h3></div>
+                <div class="bento-card reveal-bottom hobby-card"><i class="fa-solid fa-futbol hobby-icon"></i><h3>Bóng đá</h3></div>
+                <div class="bento-card reveal-right hobby-card"><i class="fa-solid fa-guitar hobby-icon"></i><h3>Guitar</h3></div>
             </div>
         </div>
     </section>
 
+    <!-- LIÊN HỆ (GIAO DIỆN NÚT CTA VÀ DANH SÁCH TỐI GIẢN) -->
     <section id="lien-he">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Thông tin liên hệ</h2></div>
-            <div class="contact-bento reveal-bottom">
-                <a href="mailto:dangminhphat14302@gmail.com" class="contact-item span-2"><div class="contact-icon" style="background: #ef4444;">✉️</div><div class="contact-info"><span class="contact-label">Email</span><span class="contact-value">dangminhphat14302@gmail.com</span></div></a>
-                <a href="tel:0816738016" class="contact-item"><div class="contact-icon" style="background: #10b981;">📞</div><div class="contact-info"><span class="contact-label">Điện thoại</span><span class="contact-value">(+84) 816 738 016</span></div></a>
-                <div class="contact-item span-2"><div class="contact-icon" style="background: #f59e0b;">📍</div><div class="contact-info"><span class="contact-label">Địa chỉ</span><span class="contact-value">Phường Cao Lãnh, Đồng Tháp</span></div></div>
-                <a href="https://zalo.me/0816738016" target="_blank" class="contact-item"><div class="contact-icon" style="background: #0068ff; font-weight: 900;">Z</div><div class="contact-info"><span class="contact-label">Zalo</span><span class="contact-value">0816 738 016</span></div></a>
-                <a href="https://www.facebook.com/PhatDangZee/" target="_blank" class="contact-item"><div class="contact-icon" style="background: #1877f2; font-weight: bold; font-family: serif; font-size: 1.6rem;">f</div><div class="contact-info"><span class="contact-label">Facebook</span><span class="contact-value">Phát Đặng</span></div></a>
-                <a href="https://www.linkedin.com/in/phát-đặng-7634b6266/" target="_blank" class="contact-item"><div class="contact-icon" style="background: #0a66c2; font-weight: bold; font-size: 1.2rem;">in</div><div class="contact-info"><span class="contact-label">LinkedIn</span><span class="contact-value">Phát Đặng</span></div></a>
-                <a href="https://github.com/PhatMinhDang143" target="_blank" class="contact-item"><div class="contact-icon" style="background: #334155;">💻</div><div class="contact-info"><span class="contact-label">GitHub</span><span class="contact-value">PhatMinhDang143</span></div></a>
+            
+            <div class="bento-card reveal-bottom">
+                <!-- Vùng Nút Kêu gọi Hành động (CTA) -->
+                <div class="contact-cta-wrapper">
+                    <a href="tel:0816738016" class="cta-btn btn-phone">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <div class="cta-text">
+                            <span class="cta-title">Gọi điện thoại</span>
+                            <span class="cta-sub">0816 738 016</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://zalo.me/0816738016" target="_blank" class="cta-btn btn-zalo">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <div class="cta-text">
+                            <span class="cta-title">Nhắn tin Zalo</span>
+                            <span class="cta-sub">Tư vấn & Trao đổi học tập</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Danh sách Kênh phụ trợ (Tối giản với FontAwesome) -->
+                <div class="simple-contact">
+                    <a href="mailto:dangminhphat14302@gmail.com" class="simple-item">
+                        <i class="fa-solid fa-envelope"></i> dangminhphat14302@gmail.com
+                    </a>
+                    <div class="simple-item">
+                        <i class="fa-solid fa-map-location-dot"></i> Phường Cao Lãnh, Đồng Tháp
+                    </div>
+                    <a href="https://www.facebook.com/PhatDangZee/" target="_blank" class="simple-item">
+                        <i class="fa-brands fa-facebook-f"></i> Phát Đặng
+                    </a>
+                    <a href="https://www.linkedin.com/in/phát-đặng-7634b6266/" target="_blank" class="simple-item">
+                        <i class="fa-brands fa-linkedin-in"></i> Phát Đặng
+                    </a>
+                    <a href="https://github.com/PhatMinhDang143" target="_blank" class="simple-item">
+                        <i class="fa-brands fa-github"></i> PhatMinhDang143
+                    </a>
+                </div>
             </div>
+
         </div>
     </section>
 
     <footer>
-        <div class="container"><p>© Designed by Đặng Minh Phát</p></div>
+        <div class="container"><p>© Đặng Minh Phát. Thiết kế tối ưu hiệu năng - Cinematic Vector Graphics.</p></div>
     </footer>
 
     <!-- SCRIPT ĐIỀU KHIỂN HOẠT ẢNH BẰNG THANH CUỘN -->
@@ -301,7 +345,6 @@
                     if (e.isIntersecting) {
                         e.target.classList.add('revealed');
                     } else {
-                        // Xóa class để khi lướt ngược lại nội dung sẽ trượt lại từ đầu
                         e.target.classList.remove('revealed'); 
                     }
                 });
@@ -317,24 +360,16 @@
                         const winHeight = window.innerHeight;
                         const maxScroll = docHeight - winHeight;
                         
-                        // Tính toán % người dùng đã cuộn
                         let progress = 0;
-                        if (maxScroll > 0) {
-                            progress = window.scrollY / maxScroll;
-                        }
-                        
-                        // Giới hạn giá trị để tránh lỗi hiển thị khi cuộn quá tay trên điện thoại
+                        if (maxScroll > 0) { progress = window.scrollY / maxScroll; }
                         progress = Math.min(Math.max(progress, 0), 0.999);
                         
-                        // Cập nhật biến CSS toàn cục
                         document.documentElement.style.setProperty('--scroll-progress', `-${progress}s`);
                         scrollTicking = false;
                     });
                     scrollTicking = true;
                 }
             });
-            
-            // Kích hoạt tính toán ngay lần đầu tải trang
             window.dispatchEvent(new Event('scroll'));
         });
     </script>
