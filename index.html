@@ -22,8 +22,23 @@
         html { scroll-behavior: smooth; }
         body { background-color: #1b063d; color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
+        /* ========================================= */
+        /* SVG BACKGROUND - ADAPTIVE DESIGN          */
+        /* ========================================= */
         .svg-background { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; background-color: #ffefba; }
-        .svg-background svg * { animation-play-state: paused !important; animation-duration: 1s !important; animation-iteration-count: 1 !important; animation-fill-mode: both !important; animation-delay: var(--scroll-progress) !important; will-change: transform, opacity; }
+        
+        /* Mặc định cho Desktop: Đóng băng animation để JS điều khiển bằng scroll */
+        .svg-background svg * { 
+            animation-play-state: paused !important; 
+            animation-duration: 1s !important; 
+            animation-iteration-count: 1 !important; 
+            animation-fill-mode: both !important; 
+            animation-delay: var(--scroll-progress) !important; 
+            will-change: transform, opacity; 
+        }
+
+        /* Lớp nhiễu hạt Film Grain (Chỉ hiện trên Desktop) */
+        .bg-texture { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); z-index: 10; pointer-events: none; }
 
         .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
         header { background-color: rgba(20, 5, 45, 0.85); border-bottom: 1px solid var(--border-glass); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: 0.3s; }
@@ -90,16 +105,11 @@
         .hobby-card:hover .hobby-icon { transform: scale(1.2) translateY(-10px); color: var(--accent); text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .hobby-card h3 { font-size: 1.3rem; color: #fff; font-weight: 700; }
 
-        /* ========================================= */
-        /* GIAO DIỆN LIÊN HỆ & FORM (THIẾT KẾ MỚI)   */
-        /* ========================================= */
         .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .contact-info-col { display: flex; flex-direction: column; }
-        .contact-form-col { display: flex; flex-direction: column; }
-        
+        .contact-info-col, .contact-form-col { display: flex; flex-direction: column; }
         .form-title { color: #fff; font-size: 1.35rem; font-weight: 800; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
         
-        .contact-cta-wrapper { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+        .contact-cta-wrapper { display: flex; flex-direction: column; gap: 16px; margin-bottom: 30px; }
         .cta-btn { display: flex; align-items: center; gap: 16px; padding: 14px 28px; border-radius: 12px; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; border: none; cursor: pointer; outline: none; }
         .cta-btn i { font-size: 1.8rem; color: #fff; }
         .cta-text { display: flex; flex-direction: column; text-align: left; }
@@ -108,10 +118,8 @@
         
         .btn-zalo { background: linear-gradient(135deg, #0068ff, #0054cc); border: 1px solid rgba(255,255,255,0.2); }
         .btn-zalo:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 104, 255, 0.4); background: linear-gradient(135deg, #0073ff, #005bee); }
-        
         .btn-phone { background: linear-gradient(135deg, #10b981, #059669); border: 1px solid rgba(255,255,255,0.2); }
         .btn-phone:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4); background: linear-gradient(135deg, #34d399, #059669); }
-
         .btn-submit { background: linear-gradient(135deg, var(--accent), #e11d48); justify-content: center; margin-top: 8px; }
         .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 98, 84, 0.4); }
         .btn-submit .cta-title { font-size: 1.15rem; }
@@ -131,6 +139,9 @@
 
         footer { padding: 40px 0; text-align: center; font-size: 0.95rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(27, 6, 61, 0.8); backdrop-filter: blur(10px); }
 
+        /* ========================================= */
+        /* MOBILE OPTIMIZATION (ĐIỆN THOẠI THÌ TỐI ƯU) */
+        /* ========================================= */
         @media (max-width: 850px) {
             .hero h1 { font-size: 2.5rem; }
             .info-grid { grid-template-columns: repeat(2, 1fr); }
@@ -138,6 +149,17 @@
             .nav-links { display: none; }
             .contact-layout { grid-template-columns: 1fr; }
             .simple-item:hover { transform: translateY(-3px) translateX(0); }
+            .bento-card:hover { transform: none; } /* Tắt hiệu ứng nảy nổi trên màn hình cảm ứng để tránh chạm nhầm */
+            
+            /* Ghi đè để điện thoại tự động chạy animation (rất chậm), không bị ép theo cuộn chuột */
+            .svg-background svg * {
+                animation-play-state: running !important;
+                animation-iteration-count: infinite !important;
+                animation-duration: 40s !important; /* Chạy thật chậm và mượt */
+                animation-delay: 0s !important;
+            }
+            /* Ẩn hoàn toàn bộ lọc nhiễu hạt để giải phóng 100% GPU cho điện thoại */
+            .bg-texture { display: none !important; }
         }
         @media (max-width: 600px) {
             .info-grid { grid-template-columns: 1fr; }
@@ -146,7 +168,11 @@
 </head>
 <body>
 
+    <!-- SVG BACKGROUND -->
     <div class="svg-background">
+        <!-- Lớp phủ Film Grain, tự động ẩn trên điện thoại -->
+        <div class="bg-texture"></div>
+        
         <svg id="esa06W5jl3A1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 100 700 400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
             <style><![CDATA[
             #esa06W5jl3A3_to {animation: esa06W5jl3A3_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A3_to__to { 0% {transform: translate(1453.623649px,706.034976px)} 8% {transform: translate(1453.623649px,706.034976px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(1453.623649px,-303.334493px)} 100% {transform: translate(1453.623649px,-303.334493px)}} #esa06W5jl3A5_to {animation: esa06W5jl3A5_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_to__to { 0% {transform: translate(960px,658px)} 8% {transform: translate(960px,658px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1220.179993px)} 100% {transform: translate(960px,1220.179993px)}} #esa06W5jl3A5 {animation: esa06W5jl3A5_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A5_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0} 100% {opacity: 0}} #esa06W5jl3A6_to {animation: esa06W5jl3A6_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_to__to { 0% {transform: translate(959.999996px,730px)} 8% {transform: translate(959.999996px,730px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999996px,1197.159976px)} 100% {transform: translate(959.999996px,1197.159976px)}} #esa06W5jl3A6 {animation: esa06W5jl3A6_c_o 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A6_c_o { 0% {opacity: 1} 8% {opacity: 1;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {opacity: 0.5} 100% {opacity: 0.5}} #esa06W5jl3A7_to {animation: esa06W5jl3A7_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7_to__to { 0% {transform: translate(959.999999px,810px)} 8% {transform: translate(959.999999px,810px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(959.999999px,1180.545549px)} 100% {transform: translate(959.999999px,1180.545549px)}} #esa06W5jl3A7-fill-0 {animation: esa06W5jl3A7-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-0__c { 0% {stop-color: #ff6254} 8% {stop-color: #ff6254;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffac54} 100% {stop-color: #ffac54}} #esa06W5jl3A7-fill-1 {animation: esa06W5jl3A7-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A7-fill-1__c { 0% {stop-color: #ff9b47} 8% {stop-color: #ff9b47;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ffc755} 100% {stop-color: #ffc755}} #esa06W5jl3A8_to {animation: esa06W5jl3A8_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A8_to__to { 0% {transform: translate(960.000005px,820px)} 8% {transform: translate(960.000005px,820px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960.000005px,1175.910001px)} 100% {transform: translate(960.000005px,1175.910001px)}} #esa06W5jl3A9-fill-0 {animation: esa06W5jl3A9-fill-0__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-0__c { 0% {stop-color: #c6185b} 8% {stop-color: #c6185b;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #f30f5b} 100% {stop-color: #f30f5b}} #esa06W5jl3A9-fill-1 {animation: esa06W5jl3A9-fill-1__c 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A9-fill-1__c { 0% {stop-color: #e24556} 8% {stop-color: #e24556;animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {stop-color: #ff7d4f} 100% {stop-color: #ff7d4f}} #esa06W5jl3A11_to {animation: esa06W5jl3A11_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A11_to__to { 0% {transform: translate(960px,920px)} 8% {transform: translate(960px,920px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1120px)} 100% {transform: translate(960px,1120px)}} #esa06W5jl3A17_to {animation: esa06W5jl3A17_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A17_to__to { 0% {transform: translate(2420.493774px,810.950073px)} 8% {transform: translate(2420.493774px,810.950073px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(-494.283677px,810.950073px)} 100% {transform: translate(-494.283677px,810.950073px)}} #esa06W5jl3A36_to {animation: esa06W5jl3A36_to__to 2500ms linear infinite alternate forwards}@keyframes esa06W5jl3A36_to__to { 0% {transform: translate(960px,900px)} 8% {transform: translate(960px,900px);animation-timing-function: cubic-bezier(0.42,0,0.58,1)} 88% {transform: translate(960px,1000px)} 100% {transform: translate(960px,1000px)}}
@@ -183,7 +209,7 @@
         </svg>
     </div>
 
-    <!-- NỘI DUNG CHÍNH TRANG WEB -->
+    <!-- NỘI DUNG CHÍNH -->
     <header>
         <div class="container">
             <div class="nav-wrapper">
@@ -233,7 +259,7 @@
             <div class="skills-grid">
                 <div class="bento-card reveal-left skill-box">
                     <h3>Chuyên môn Giảng dạy</h3>
-                    <div class="skill-item"><div class="skill-info"><span>Toán THPT </span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div></div>
+                    <div class="skill-item"><div class="skill-info"><span>Toán THPT (Chân trời sáng tạo)</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Tích hợp phương pháp STEM</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Biên soạn Bài tập & Tài liệu</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
                 </div>
@@ -241,7 +267,7 @@
                     <h3>Kỹ năng Bổ trợ</h3>
                     <div class="skill-item"><div class="skill-info"><span>Thiết kế Ấn phẩm (Bìa sách, Slide)</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
                     <div class="skill-item"><div class="skill-info"><span>Quản lý & Điều phối Lớp học nhóm</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div></div>
-                    <div class="skill-item"><div class="skill-info"><span>Ứng ụng CNTT & AI </span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%;"></div></div></div>
+                    <div class="skill-item"><div class="skill-info"><span>Nhiếp ảnh (Cinematic Aesthetic)</span><span>75%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 75%;"></div></div></div>
                 </div>
             </div>
         </div>
@@ -283,26 +309,26 @@
         </div>
     </section>
 
-    <!-- GIAO DIỆN LIÊN HỆ & FORM CỘT ĐÔI HOÀN TOÀN MỚI -->
+    <!-- LIÊN HỆ CỘT ĐÔI -->
     <section id="lien-he">
         <div class="container">
             <div class="reveal-bottom section-header"><h2 class="section-title">Thông tin liên hệ</h2></div>
             
             <div class="contact-layout">
-                <!-- Cột 1: Thông tin & Nút bấm CTA -->
+                <!-- Cột trái: Các Nút bấm và Mạng Xã Hội -->
                 <div class="contact-info-col reveal-left">
                     <div class="bento-card" style="height: 100%;">
                         <h3 class="form-title" style="margin-bottom: 30px;">Kết nối với tôi</h3>
                         
-                        <div class="contact-cta-wrapper" style="flex-direction: column; align-items: stretch; margin-bottom: 30px;">
-                            <a href="tel:0816738016" class="cta-btn btn-phone" style="width: 100%; justify-content: center;">
+                        <div class="contact-cta-wrapper">
+                            <a href="tel:0816738016" class="cta-btn btn-phone">
                                 <i class="fa-solid fa-phone-volume"></i>
                                 <div class="cta-text">
                                     <span class="cta-title">Gọi điện thoại</span>
                                     <span class="cta-sub">0816 738 016</span>
                                 </div>
                             </a>
-                            <a href="https://zalo.me/0816738016" target="_blank" class="cta-btn btn-zalo" style="width: 100%; justify-content: center;">
+                            <a href="https://zalo.me/0816738016" target="_blank" class="cta-btn btn-zalo">
                                 <i class="fa-solid fa-comment-dots"></i>
                                 <div class="cta-text">
                                     <span class="cta-title">Nhắn tin Zalo</span>
@@ -311,7 +337,7 @@
                             </a>
                         </div>
                         
-                        <div class="simple-contact" style="justify-content: flex-start;">
+                        <div class="simple-contact">
                             <a href="mailto:dangminhphat14302@gmail.com" class="simple-item"><i class="fa-solid fa-envelope"></i> dangminhphat14302@gmail.com</a>
                             <div class="simple-item"><i class="fa-solid fa-map-location-dot"></i> Phường Cao Lãnh, Đồng Tháp</div>
                             <a href="https://www.facebook.com/PhatDangZee/" target="_blank" class="simple-item"><i class="fa-brands fa-facebook-f"></i> Phát Đặng</a>
@@ -321,13 +347,12 @@
                     </div>
                 </div>
 
-                <!-- Cột 2: Form liên hệ Formspree tĩnh -->
+                <!-- Cột phải: Form liên hệ tĩnh qua Formspree -->
                 <div class="contact-form-col reveal-right">
                     <div class="bento-card" style="height: 100%;">
                         <h3 class="form-title">Gửi lời nhắn</h3>
                         
-                        <!-- CHÚ Ý: BẠN HÃY COPY ĐƯỜNG LINK TỪ FORMSPREE VÀ THAY THẾ VÀO CHỮ "LINK_FORMSPREE_CUA_BAN_PASTE_VAO_DAY" BÊN DƯỚI -->
-                        <form action="https://formspree.io/f/mpqgvgnv" method="POST" class="contact-form">
+                        <form action="LINK_FORMSPREE_CUA_BAN_PASTE_VAO_DAY" method="POST" class="contact-form">
                             <div class="form-group">
                                 <label for="name">Họ và tên</label>
                                 <input type="text" id="name" name="name" class="form-control" placeholder="Nhập tên của bạn..." required>
@@ -345,35 +370,35 @@
                                 <span class="cta-title">Gửi tin nhắn</span>
                             </button>
                         </form>
-                        
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <footer>
-        <div class="container"><p>© Đặng Minh Phát. Thiết kế tối ưu hiệu năng - Cinematic Vector Graphics.</p></div>
+        <div class="container"><p>© Đặng Minh Phát. Adaptive Design (Desktop Full, Mobile Optimized).</p></div>
     </footer>
 
-    <!-- SCRIPT ĐIỀU KHIỂN HOẠT ẢNH BẰNG THANH CUỘN -->
+    <!-- SCRIPT ADAPTIVE (THÍCH ỨNG THEO THIẾT BỊ ĐỂ CHỐNG LAG) -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // 1. Quản lý Hiệu ứng trượt khi cuộn trang
             const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-bottom');
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('revealed');
-                    } else {
-                        e.target.classList.remove('revealed'); 
-                    }
+                    if (e.isIntersecting) { e.target.classList.add('revealed'); } 
+                    else { e.target.classList.remove('revealed'); }
                 });
             }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
             revealElements.forEach(el => revealObserver.observe(el));
 
+            // 2. Adaptive Background Animation (Ngắt xử lý mệt nhọc trên Mobile)
             let scrollTicking = false;
             window.addEventListener('scroll', () => {
+                // Tối ưu: Nếu là màn hình nhỏ (điện thoại), tắt hàm theo dõi cuộn của SVG
+                if (window.innerWidth <= 850) return; 
+
                 if (!scrollTicking) {
                     window.requestAnimationFrame(() => {
                         const docHeight = document.documentElement.scrollHeight;
@@ -390,6 +415,8 @@
                     scrollTicking = true;
                 }
             });
+            
+            // Trigger 1 lần khi load trang
             window.dispatchEvent(new Event('scroll'));
         });
     </script>
